@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, MessageHeart, PenTool } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -30,26 +30,26 @@ const Index = () => {
     {
       title: "Love Letters",
       description: "Express your deepest feelings with beautifully crafted love letters that speak directly to the heart.",
-      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=800&h=600&fit=crop",
-      price: "Starting ₹899"
+      image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&h=600&fit=crop",
+      price: "Starting ₹599"
     },
     {
       title: "Gratitude Messages",
       description: "Say thank you in the most meaningful way with personalized gratitude letters that touch souls.",
-      image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&h=600&fit=crop",
-      price: "Starting ₹699"
+      image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=600&fit=crop",
+      price: "Starting ₹499"
     },
     {
       title: "Apology Letters",
       description: "Mend hearts and relationships with sincere, heartfelt apology messages that heal wounds.",
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&h=600&fit=crop",
-      price: "Starting ₹799"
+      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=600&fit=crop",
+      price: "Starting ₹499"
     },
     {
       title: "Special Occasions",
       description: "Make birthdays, anniversaries, and milestones unforgettable with custom emotional messages.",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&h=600&fit=crop",
-      price: "Starting ₹999"
+      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&h=600&fit=crop",
+      price: "Starting ₹799"
     }
   ];
 
@@ -99,7 +99,7 @@ const Index = () => {
         <div className={`absolute inset-0 bg-gradient-to-br from-pink-50/30 to-purple-50/30 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,182,193,0.1),transparent_50%)]" />
         
-        {/* Floating Love Elements */}
+        {/* Enhanced Floating Love Elements */}
         <div className="absolute top-20 left-10 animate-float">
           <div className="w-8 h-8 text-pink-300 opacity-60">
             <Heart className="w-full h-full fill-current" />
@@ -120,8 +120,19 @@ const Index = () => {
             <Heart className="w-full h-full fill-current" />
           </div>
         </div>
+        
+        {/* New floating elements */}
+        <div className="absolute top-1/4 left-1/3 animate-float delay-1500">
+          <Sparkles className="w-6 h-6 text-yellow-300 opacity-40" />
+        </div>
+        <div className="absolute bottom-1/3 right-1/3 animate-float delay-2500">
+          <Star className="w-5 h-5 text-purple-300 opacity-50 fill-current" />
+        </div>
+        <div className="absolute top-3/4 left-1/4 animate-float delay-3500">
+          <MessageHeart className="w-7 h-7 text-pink-300 opacity-35" />
+        </div>
 
-        {/* Floating Balloons */}
+        {/* Enhanced Floating Balloons */}
         <div className="absolute top-24 right-32 animate-bounce">
           <div className="w-12 h-16 bg-gradient-to-b from-pink-300 to-pink-400 rounded-full opacity-30 shadow-lg"></div>
           <div className="w-0.5 h-8 bg-pink-300 mx-auto opacity-50"></div>
@@ -134,13 +145,27 @@ const Index = () => {
           <div className="w-8 h-12 bg-gradient-to-b from-rose-300 to-rose-400 rounded-full opacity-20 shadow-lg"></div>
           <div className="w-0.5 h-4 bg-rose-300 mx-auto opacity-30"></div>
         </div>
+        <div className="absolute top-1/2 left-16 animate-bounce delay-1500">
+          <div className="w-9 h-13 bg-gradient-to-b from-yellow-300 to-orange-300 rounded-full opacity-25 shadow-lg"></div>
+          <div className="w-0.5 h-5 bg-yellow-300 mx-auto opacity-35"></div>
+        </div>
 
-        {/* Floating Letters */}
+        {/* Floating Letters and Envelopes */}
         <div className="absolute top-1/4 left-16 animate-pulse">
           <Mail className="w-6 h-6 text-amber-300 opacity-40" />
         </div>
         <div className="absolute bottom-1/3 right-24 animate-pulse delay-1000">
           <Mail className="w-8 h-8 text-yellow-300 opacity-30" />
+        </div>
+        <div className="absolute top-1/2 right-20 animate-pulse delay-2000">
+          <PenTool className="w-5 h-5 text-blue-300 opacity-35" />
+        </div>
+
+        {/* Floating paper planes */}
+        <div className="absolute top-1/3 left-1/4 animate-float delay-4000">
+          <div className="w-6 h-6 text-blue-200 opacity-30 transform rotate-45">
+            <div className="w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-current"></div>
+          </div>
         </div>
 
         <div className={`text-center max-w-5xl mx-auto relative z-10 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -284,17 +309,58 @@ const Index = () => {
 
           <div className="grid md:grid-cols-4 gap-8">
             {[
-              { step: "01", title: "Share Your Story", desc: "Tell us about your feelings, the person, and what you want to express" },
-              { step: "02", title: "We Craft Magic", desc: "Our team transforms your emotions into beautifully written messages" },
-              { step: "03", title: "Review & Refine", desc: "We'll share the draft for your approval and make any adjustments" },
-              { step: "04", title: "Delivered with Love", desc: "Receive your personalized message, ready to touch hearts" }
+              { 
+                step: "01", 
+                title: "Share Your Story", 
+                desc: "Tell us about your feelings, the person, and what you want to express",
+                icon: MessageHeart,
+                color: "from-pink-500 to-rose-500"
+              },
+              { 
+                step: "02", 
+                title: "We Craft Magic", 
+                desc: "Our team transforms your emotions into beautifully written messages",
+                icon: PenTool,
+                color: "from-purple-500 to-indigo-500"
+              },
+              { 
+                step: "03", 
+                title: "Review & Refine", 
+                desc: "We'll share the draft for your approval and make any adjustments",
+                icon: Star,
+                color: "from-yellow-500 to-orange-500"
+              },
+              { 
+                step: "04", 
+                title: "Delivered with Love", 
+                desc: "Receive your personalized message, ready to touch hearts",
+                icon: Gift,
+                color: "from-green-500 to-emerald-500"
+              }
             ].map((item, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold group-hover:scale-110 transition-transform shadow-lg">
-                  {item.step}
+              <div key={index} className="text-center group relative">
+                {/* Connection line */}
+                {index < 3 && (
+                  <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-muted-foreground/20 to-transparent transform translate-x-4 z-0"></div>
+                )}
+                
+                <div className="relative z-10">
+                  <div className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center text-white text-xl font-bold group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-2xl relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <span className="relative z-10">{item.step}</span>
+                  </div>
+                  
+                  <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <item.icon className="w-8 h-8 mx-auto text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors duration-300">{item.title}</h3>
+                  <p className="text-muted-foreground group-hover:text-foreground transition-colors duration-300">{item.desc}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{item.title}</h3>
-                <p className="text-muted-foreground">{item.desc}</p>
+                
+                {/* Floating elements around each step */}
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-pink-300 rounded-full opacity-0 group-hover:opacity-50 animate-pulse transition-opacity duration-300"></div>
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-300 rounded-full opacity-0 group-hover:opacity-40 animate-pulse delay-500 transition-opacity duration-300"></div>
               </div>
             ))}
           </div>
