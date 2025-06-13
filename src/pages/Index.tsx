@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, MessageHeart, PenTool } from 'lucide-react';
+import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, MessageCircle, PenTool } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
@@ -129,7 +129,7 @@ const Index = () => {
           <Star className="w-5 h-5 text-purple-300 opacity-50 fill-current" />
         </div>
         <div className="absolute top-3/4 left-1/4 animate-float delay-3500">
-          <MessageHeart className="w-7 h-7 text-pink-300 opacity-35" />
+          <MessageCircle className="w-7 h-7 text-pink-300 opacity-35" />
         </div>
 
         {/* Enhanced Floating Balloons */}
@@ -313,7 +313,7 @@ const Index = () => {
                 step: "01", 
                 title: "Share Your Story", 
                 desc: "Tell us about your feelings, the person, and what you want to express",
-                icon: MessageHeart,
+                icon: MessageCircle,
                 color: "from-pink-500 to-rose-500"
               },
               { 
