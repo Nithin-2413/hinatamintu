@@ -1,8 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 
 interface ServiceCardProps {
   title: string;
@@ -13,33 +11,26 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, image, price }) => {
   return (
-    <Card className="group overflow-hidden border-0 bg-gradient-to-br from-background to-muted/30 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+    <Card className="group overflow-hidden border-0 bg-gradient-to-br from-background to-muted/20 hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 hover:scale-105">
       <div className="relative h-48 overflow-hidden">
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute bottom-4 left-4 text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+        <div className="absolute bottom-4 left-4 text-white font-semibold text-lg">
           {price}
         </div>
       </div>
       
-      <CardContent className="p-6">
-        <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+      <CardContent className="p-8 text-center">
+        <h3 className="text-2xl font-semibold mb-4 transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:via-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent">
           {title}
         </h3>
-        <p className="text-muted-foreground mb-4 leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed text-center">
           {description}
         </p>
-        <Button 
-          variant="ghost" 
-          className="p-0 h-auto text-primary hover:text-primary/80 group/btn"
-        >
-          Learn More
-          <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-        </Button>
       </CardContent>
     </Card>
   );

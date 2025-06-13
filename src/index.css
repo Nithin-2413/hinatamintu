@@ -101,23 +101,48 @@
   }
 }
 
-/* Smooth scrolling */
+/* Premium smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom animations */
+.premium-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--primary)/0.7));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--primary)/0.9));
+  transform: scale(1.1);
+}
+
+/* Premium floating animations */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 /* Enhanced bounce animation */
@@ -133,7 +158,7 @@ html {
 }
 
 .animate-bounce-slow {
-  animation: bounce-slow 3s infinite;
+  animation: bounce-slow 4s infinite;
 }
 
 /* Gradient text animation */
@@ -152,172 +177,108 @@ html {
 .animate-gradient {
   background: linear-gradient(-45deg, #8b5cf6, #ec4899, #06b6d4, #10b981);
   background-size: 400% 400%;
-  animation: gradient 3s ease infinite;
+  animation: gradient 4s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Pulsing glow effect */
+/* Premium pulsing glow effect */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
   }
   50% {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
   }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
-/* Floating heart animation */
-@keyframes float-heart {
-  0%, 100% {
-    transform: translateY(0px) scale(1);
-  }
-  33% {
-    transform: translateY(-15px) scale(1.1);
-  }
-  66% {
-    transform: translateY(-5px) scale(0.9);
-  }
+/* Smooth hover transitions */
+.hover-lift {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.animate-float-heart {
-  animation: float-heart 4s ease-in-out infinite;
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Wiggle animation */
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-3deg);
-  }
-  75% {
-    transform: rotate(3deg);
-  }
-}
-
-.animate-wiggle {
-  animation: wiggle 2s ease-in-out infinite;
-}
-
-/* Sparkle animation */
-@keyframes sparkle {
-  0%, 100% {
+/* Premium fade-in animations */
+@keyframes fadeInUp {
+  from {
     opacity: 0;
-    transform: scale(0);
+    transform: translate3d(0, 40px, 0);
   }
-  50% {
+  to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-.animate-sparkle {
-  animation: sparkle 2s ease-in-out infinite;
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
 }
 
-/* Dancing balloon animation */
-@keyframes dance {
-  0%, 100% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-10px) rotate(-5deg);
-  }
-  75% {
-    transform: translateX(10px) rotate(5deg);
-  }
+/* Elegant parallax scrolling */
+.parallax-slow {
+  will-change: transform;
 }
 
-.animate-dance {
-  animation: dance 3s ease-in-out infinite;
+/* Premium glass morphism effects */
+.glass-morphism {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(209, 213, 219, 0.3);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Subtle premium shadows */
+.premium-shadow {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+.premium-shadow-hover:hover {
+  box-shadow: 0 15px 60px 0 rgba(31, 38, 135, 0.5);
+  transition: all 0.4s ease;
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
-}
-
-/* Form styling enhancements */
-.form-floating-label {
+/* Smooth section transitions */
+section {
   position: relative;
+  overflow: hidden;
 }
 
-.form-floating-label input:focus + label,
-.form-floating-label input:not(:placeholder-shown) + label {
-  transform: translateY(-24px) scale(0.875);
-  color: hsl(var(--primary));
-}
-
-.form-floating-label label {
+section::before {
+  content: '';
   position: absolute;
-  left: 12px;
-  top: 12px;
-  transition: all 0.2s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
-  color: hsl(var(--muted-foreground));
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-/* Hover effects for icons */
-.icon-hover {
-  transition: all 0.3s ease;
+/* Premium button hover effects */
+.premium-button {
+  position: relative;
+  overflow: hidden;
 }
 
-.icon-hover:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+.premium-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
-/* Celebration effects */
-@keyframes celebrate {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2) rotate(180deg);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1) rotate(360deg);
-    opacity: 0.8;
-  }
-}
-
-.animate-celebrate {
-  animation: celebrate 1.5s ease-out;
-}
-
-/* Paper plane animation */
-@keyframes fly {
-  0% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  100% {
-    transform: translateX(200px) translateY(-100px) rotate(45deg);
-    opacity: 0;
-  }
-}
-
-.animate-fly {
-  animation: fly 3s ease-out infinite;
+.premium-button:hover::before {
+  transform: translateX(100%);
 }
