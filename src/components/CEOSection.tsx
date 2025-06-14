@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Star, Sparkles } from 'lucide-react';
@@ -35,14 +36,12 @@ const CEOSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative flex justify-center lg:justify-end">
-            <div className="w-64 h-80 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-200/30 to-purple-200/30 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+            <div className="w-80 h-80 relative">
               <img
                 src="/lovable-uploads/c3b76b67-4b74-46f2-977b-973f064ca0c4.png"
                 alt="Onaamika Sadguru"
-                className="w-full h-full object-cover rounded-3xl shadow-2xl relative z-10 group-hover:scale-105 transition-all duration-500"
+                className="w-full h-full object-contain rounded-3xl"
               />
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 z-20"></div>
             </div>
           </div>
 

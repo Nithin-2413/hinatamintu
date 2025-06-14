@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -241,7 +242,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-8 text-lg leading-relaxed text-muted-foreground">
-            <p className="text-xl font-medium text-primary">
+            <p className="text-xl font-medium text-primary times-new-roman-italic">
               It started with a "HELP!" message at 11:11 PM.
             </p>
             
@@ -253,20 +254,20 @@ const Index = () => {
               With nothing but feelings and chaos on the table, she sat down and wrote. No fluff, no filters—just pure emotion, carefully translated into words.
             </p>
 
-            <p className="text-xl font-semibold text-foreground">
+            <p className="text-xl font-semibold text-foreground times-new-roman-italic">
               When that message was sent, it didn't just land.<br />
               It connected. It healed. It made someone smile in a way only true words can.
             </p>
 
-            <p className="text-lg font-medium text-primary italic">
+            <p className="text-lg font-medium text-primary times-new-roman-italic">
               That's when the spark lit:<br />
               What if we could help more people say what they truly feel, but don't know how?
             </p>
 
             <div className="bg-gradient-to-r from-pink-50/50 to-purple-50/50 p-8 rounded-3xl border border-pink-200/30">
               <p className="text-xl font-semibold text-foreground mb-4">Because let's be honest —</p>
-              <p>We live in a world where people are constantly feeling deeply…</p>
-              <p className="font-medium">…but rarely saying it meaningfully.</p>
+              <p className="times-new-roman-italic">We live in a world where people are constantly feeling deeply…</p>
+              <p className="font-medium times-new-roman-italic">…but rarely saying it meaningfully.</p>
             </div>
 
             <p>
@@ -275,7 +276,7 @@ const Index = () => {
             </p>
 
             <div className="text-center py-8">
-              <p className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              <p className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent times-new-roman-italic">
                 We're the translators of the heart.
               </p>
             </div>
@@ -292,10 +293,10 @@ const Index = () => {
 
             <div className="bg-gradient-to-r from-yellow-50/50 to-orange-50/50 p-8 rounded-3xl border border-yellow-200/30">
               <p className="text-xl font-semibold text-foreground mb-2">Why?</p>
-              <p>Because in a world full of auto-replies and emoji shortcuts, authentic emotion stands out.</p>
+              <p className="times-new-roman-italic">Because in a world full of auto-replies and emoji shortcuts, authentic emotion stands out.</p>
             </div>
 
-            <p className="text-xl text-center font-medium text-primary">
+            <p className="text-xl text-center font-medium text-primary times-new-roman-italic">
               So if you're someone who feels a lot but freezes at the keyboard, don't worry — we've made it our art to say what you can't.
             </p>
           </div>
@@ -396,6 +397,12 @@ const Index = () => {
       {/* Delivery Info Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="mb-12">
+            <p className="text-2xl font-medium text-primary times-new-roman-italic mb-6">
+              Your feelings, perfectly packaged, arrive exactly where they're meant to live—in the heart.
+            </p>
+          </div>
+          
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center group">
               <MapPin className="h-12 w-12 text-muted-foreground group-hover:text-green-500 group-hover:scale-110 transition-all duration-500 mb-4" />
