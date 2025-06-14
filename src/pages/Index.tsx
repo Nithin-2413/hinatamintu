@@ -54,9 +54,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden premium-scroll relative">
-      {/* Enhanced Floating Elements that scroll with page - More distributed */}
+      {/* Enhanced Floating Elements that scroll with page */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Heart elements - More spread out */}
+        {/* Heart elements */}
         <div className="absolute top-32 left-16 animate-float opacity-15">
           <Heart className="w-6 h-6 text-pink-300 fill-current" />
         </div>
@@ -66,14 +66,8 @@ const Index = () => {
         <div className="absolute top-[800px] left-1/4 animate-float delay-2000 opacity-25">
           <Heart className="w-5 h-5 text-red-300 fill-current" />
         </div>
-        <div className="absolute top-[1600px] right-1/3 animate-float delay-3500 opacity-18">
-          <Heart className="w-6 h-6 text-pink-400 fill-current" />
-        </div>
-        <div className="absolute top-[2200px] left-20 animate-float delay-4000 opacity-22">
-          <Heart className="w-5 h-5 text-rose-400 fill-current" />
-        </div>
         
-        {/* Star elements - More distributed */}
+        {/* Star elements */}
         <div className="absolute top-48 right-32 animate-float delay-500 opacity-20">
           <Star className="w-5 h-5 text-yellow-300 fill-current" />
         </div>
@@ -83,28 +77,16 @@ const Index = () => {
         <div className="absolute top-[1200px] right-16 animate-float delay-2500 opacity-20">
           <Star className="w-4 h-4 text-orange-300 fill-current" />
         </div>
-        <div className="absolute top-[1800px] left-1/4 animate-float delay-3200 opacity-17">
-          <Star className="w-5 h-5 text-yellow-400 fill-current" />
-        </div>
-        <div className="absolute top-[2400px] right-20 animate-float delay-4200 opacity-19">
-          <Star className="w-6 h-6 text-amber-400 fill-current" />
-        </div>
         
-        {/* Gift elements - More spread out */}
+        {/* Gift elements */}
         <div className="absolute top-[400px] right-24 animate-float delay-700 opacity-15">
           <Gift className="w-5 h-5 text-purple-300" />
         </div>
         <div className="absolute top-[1000px] left-32 animate-float delay-1800 opacity-20">
           <Gift className="w-6 h-6 text-indigo-300" />
         </div>
-        <div className="absolute top-[1500px] right-1/4 animate-float delay-2800 opacity-16">
-          <Gift className="w-5 h-5 text-violet-300" />
-        </div>
-        <div className="absolute top-[2000px] left-1/3 animate-float delay-3800 opacity-21">
-          <Gift className="w-6 h-6 text-purple-400" />
-        </div>
         
-        {/* Sparkles elements - More distributed */}
+        {/* Sparkles elements */}
         <div className="absolute top-64 left-1/3 animate-float delay-1200 opacity-15">
           <Sparkles className="w-5 h-5 text-pink-300" />
         </div>
@@ -114,25 +96,8 @@ const Index = () => {
         <div className="absolute top-[1400px] left-1/2 animate-float delay-3000 opacity-15">
           <Sparkles className="w-6 h-6 text-fuchsia-300" />
         </div>
-        <div className="absolute top-[1900px] right-1/3 animate-float delay-3600 opacity-18">
-          <Sparkles className="w-5 h-5 text-pink-400" />
-        </div>
-        <div className="absolute top-[2300px] left-1/4 animate-float delay-4100 opacity-16">
-          <Sparkles className="w-4 h-4 text-violet-400" />
-        </div>
         
-        {/* Additional Message Circle elements */}
-        <div className="absolute top-[700px] right-1/2 animate-float delay-1600 opacity-14">
-          <MessageCircle className="w-5 h-5 text-blue-300" />
-        </div>
-        <div className="absolute top-[1300px] left-1/5 animate-float delay-2700 opacity-17">
-          <MessageCircle className="w-4 h-4 text-cyan-300" />
-        </div>
-        <div className="absolute top-[2100px] right-1/5 animate-float delay-3900 opacity-19">
-          <MessageCircle className="w-6 h-6 text-blue-400" />
-        </div>
-        
-        {/* Additional floating dots - More spread */}
+        {/* Additional floating dots */}
         <div className="absolute top-80 right-1/3 animate-float delay-800 opacity-10">
           <div className="w-3 h-3 bg-pink-400 rounded-full"></div>
         </div>
@@ -141,12 +106,6 @@ const Index = () => {
         </div>
         <div className="absolute top-[1100px] right-1/3 animate-float delay-2300 opacity-12">
           <div className="w-2 h-2 bg-rose-400 rounded-full"></div>
-        </div>
-        <div className="absolute top-[1700px] left-1/6 animate-float delay-3300 opacity-13">
-          <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-        </div>
-        <div className="absolute top-[2500px] right-1/4 animate-float delay-4300 opacity-11">
-          <div className="w-4 h-4 bg-indigo-400 rounded-full"></div>
         </div>
       </div>
 
@@ -202,14 +161,10 @@ const Index = () => {
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
             Your feelings. My words. Their smile.
             <br />
             We help you express what your heart holds but words can't quite say.
-          </p>
-
-          <p className="text-lg md:text-xl text-primary/80 mb-12 italic font-medium">
-            In every unspoken moment, there lives a feeling waiting for its voice—let us help you set it free.
           </p>
           
           <div className="flex justify-center">
@@ -442,12 +397,6 @@ const Index = () => {
       {/* Delivery Info Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="mb-12">
-            <p className="text-2xl md:text-3xl font-semibold mb-4 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Your feelings, perfectly packaged, arrive exactly where they're meant to live—in the heart.
-            </p>
-          </div>
-          
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center group">
               <MapPin className="h-12 w-12 text-muted-foreground group-hover:text-green-500 group-hover:scale-110 transition-all duration-500 mb-4" />
