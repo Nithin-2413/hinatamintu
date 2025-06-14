@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -52,33 +53,66 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden premium-scroll">
-      {/* Enhanced Floating Elements */}
-      <div className="fixed inset-0 pointer-events-none z-5">
-        <div className="absolute top-20 left-10 animate-float opacity-20">
-          <div className="w-3 h-3 bg-pink-300 rounded-full animate-pulse"></div>
+    <div className="min-h-screen bg-background overflow-hidden premium-scroll relative">
+      {/* Enhanced Floating Elements that scroll with page */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Heart elements */}
+        <div className="absolute top-32 left-16 animate-float opacity-15">
+          <Heart className="w-6 h-6 text-pink-300 fill-current" />
         </div>
-        <div className="absolute top-40 right-20 animate-float delay-500 opacity-15">
-          <div className="w-4 h-4 bg-purple-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 right-20 animate-float delay-1000 opacity-20">
+          <Heart className="w-4 h-4 text-rose-300 fill-current" />
         </div>
-        <div className="absolute top-60 left-1/4 animate-float delay-1000 opacity-25">
-          <div className="w-2 h-2 bg-rose-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-[800px] left-1/4 animate-float delay-2000 opacity-25">
+          <Heart className="w-5 h-5 text-red-300 fill-current" />
         </div>
-        <div className="absolute bottom-40 right-10 animate-float delay-1500 opacity-20">
-          <div className="w-5 h-5 bg-yellow-300 rounded-full animate-pulse"></div>
+        
+        {/* Star elements */}
+        <div className="absolute top-48 right-32 animate-float delay-500 opacity-20">
+          <Star className="w-5 h-5 text-yellow-300 fill-current" />
         </div>
-        <div className="absolute bottom-60 left-16 animate-float delay-2000 opacity-15">
-          <div className="w-3 h-3 bg-indigo-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-[600px] left-20 animate-float delay-1500 opacity-15">
+          <Star className="w-6 h-6 text-amber-300 fill-current" />
         </div>
-        <div className="absolute top-1/3 left-1/2 animate-float delay-2500 opacity-10">
-          <div className="w-6 h-6 bg-emerald-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-[1200px] right-16 animate-float delay-2500 opacity-20">
+          <Star className="w-4 h-4 text-orange-300 fill-current" />
+        </div>
+        
+        {/* Gift elements */}
+        <div className="absolute top-[400px] right-24 animate-float delay-700 opacity-15">
+          <Gift className="w-5 h-5 text-purple-300" />
+        </div>
+        <div className="absolute top-[1000px] left-32 animate-float delay-1800 opacity-20">
+          <Gift className="w-6 h-6 text-indigo-300" />
+        </div>
+        
+        {/* Sparkles elements */}
+        <div className="absolute top-64 left-1/3 animate-float delay-1200 opacity-15">
+          <Sparkles className="w-5 h-5 text-pink-300" />
+        </div>
+        <div className="absolute top-[900px] right-1/4 animate-float delay-2200 opacity-20">
+          <Sparkles className="w-4 h-4 text-violet-300" />
+        </div>
+        <div className="absolute top-[1400px] left-1/2 animate-float delay-3000 opacity-15">
+          <Sparkles className="w-6 h-6 text-fuchsia-300" />
+        </div>
+        
+        {/* Additional floating dots */}
+        <div className="absolute top-80 right-1/3 animate-float delay-800 opacity-10">
+          <div className="w-3 h-3 bg-pink-400 rounded-full"></div>
+        </div>
+        <div className="absolute top-[700px] left-1/2 animate-float delay-1700 opacity-15">
+          <div className="w-4 h-4 bg-purple-400 rounded-full"></div>
+        </div>
+        <div className="absolute top-[1100px] right-1/3 animate-float delay-2300 opacity-12">
+          <div className="w-2 h-2 bg-rose-400 rounded-full"></div>
         </div>
       </div>
 
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent canduful-font">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
             The Written Hug
           </div>
           <div className="hidden md:flex space-x-8">

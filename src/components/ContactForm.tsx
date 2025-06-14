@@ -54,12 +54,41 @@ const ContactForm = () => {
     'Custom Request'
   ];
 
+  const sendEmail = async (formData: FormData) => {
+    // This would typically send to your backend API
+    // For now, we'll simulate the email functionality
+    const emailContent = `
+      New Form Submission from The Written Hug:
+      
+      Name: ${formData.name}
+      Email: ${formData.email}
+      Phone: ${formData.phone}
+      Recipient: ${formData.recipientName}
+      Service Type: ${formData.serviceType}
+      Feelings: ${formData.feelings}
+      Story: ${formData.story}
+      Specific Details: ${formData.specificDetails}
+    `;
+    
+    console.log('Email would be sent with content:', emailContent);
+    
+    // In a real implementation, you would:
+    // 1. Send this to your backend API
+    // 2. Use a service like EmailJS, Nodemailer, or SendGrid
+    // 3. Or integrate with Supabase Edge Functions
+    
+    return new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      await sendEmail(formData);
+      
       toast({
         title: "Message Received! ❤️",
         description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
@@ -77,8 +106,15 @@ const ContactForm = () => {
         specificDetails: ''
       });
       
+    } catch (error) {
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Please try again or contact us directly at onaamikasadguru@gmail.com",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   return (
