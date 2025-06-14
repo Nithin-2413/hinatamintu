@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -161,7 +160,7 @@ const Index = () => {
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed times-new-roman-italic">
             Your feelings. My words. Their smile.
             <br />
             We help you express what your heart holds but words can't quite say.
