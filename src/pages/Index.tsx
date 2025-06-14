@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, MessageCircle, PenTool } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import ServiceCard from '@/components/ServiceCard';
-import TestimonialCard from '@/components/TestimonialCard';
+import CEOSection from '@/components/CEOSection';
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -52,33 +51,34 @@ const Index = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      location: "Mumbai",
-      message: "The Written Hug helped me express 10 years of unspoken gratitude to my mother. She cried tears of joy!",
-      rating: 5
-    },
-    {
-      name: "Rahul Gupta",
-      location: "Delhi",
-      message: "I couldn't find words to apologize to my best friend. Their letter saved our friendship.",
-      rating: 5
-    },
-    {
-      name: "Anjali Patel",
-      location: "Bangalore",
-      message: "The love letter they wrote for my anniversary was pure magic. My husband was speechless!",
-      rating: 5
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-background overflow-hidden premium-scroll">
+      {/* Enhanced Floating Elements */}
+      <div className="fixed inset-0 pointer-events-none z-5">
+        <div className="absolute top-20 left-10 animate-float opacity-20">
+          <div className="w-3 h-3 bg-pink-300 rounded-full animate-pulse"></div>
+        </div>
+        <div className="absolute top-40 right-20 animate-float delay-500 opacity-15">
+          <div className="w-4 h-4 bg-purple-300 rounded-full animate-pulse"></div>
+        </div>
+        <div className="absolute top-60 left-1/4 animate-float delay-1000 opacity-25">
+          <div className="w-2 h-2 bg-rose-300 rounded-full animate-pulse"></div>
+        </div>
+        <div className="absolute bottom-40 right-10 animate-float delay-1500 opacity-20">
+          <div className="w-5 h-5 bg-yellow-300 rounded-full animate-pulse"></div>
+        </div>
+        <div className="absolute bottom-60 left-16 animate-float delay-2000 opacity-15">
+          <div className="w-3 h-3 bg-indigo-300 rounded-full animate-pulse"></div>
+        </div>
+        <div className="absolute top-1/3 left-1/2 animate-float delay-2500 opacity-10">
+          <div className="w-6 h-6 bg-emerald-300 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent canduful-font">
             The Written Hug
           </div>
           <div className="hidden md:flex space-x-8">
@@ -191,42 +191,80 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CEO Section - Premium and Minimal */}
-      <section className="py-32 px-6 bg-gradient-to-b from-background to-pink-50/10 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
-          <div className="text-center">
+      {/* CEO Section */}
+      <CEOSection />
+
+      {/* New Business Story Section */}
+      <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
+          <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              Meet Our
-              <br />
               <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Chief Emotions Officer
+                We Didn't Mean to Start a Business…
               </span>
+              <br />
+              <span className="text-foreground text-4xl">But...</span>
             </h2>
+          </div>
+
+          <div className="space-y-8 text-lg leading-relaxed text-muted-foreground">
+            <p className="text-xl font-medium text-primary">
+              It started with a "HELP!" message at 11:11 PM.
+            </p>
             
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-4xl font-bold mb-8 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Onaamika Sadguru
-              </h3>
-              
-              <div className="space-y-8 text-muted-foreground leading-relaxed">
-                <p className="text-xl">
-                  A wordsmith with a heart that feels deeply and a pen that bleeds emotion. 
-                  Onaamika doesn't just write letters—she weaves souls into sentences and 
-                  transforms silent hearts into singing words.
-                </p>
-                
-                <p className="text-lg">
-                  With an uncanny ability to capture the essence of human connection, she has 
-                  dedicated her life to giving voice to the voiceless emotions that live in the 
-                  space between heartbeats.
-                </p>
-                
-                <p className="text-xl font-medium text-primary italic">
-                  "Every emotion deserves to be heard, every feeling deserves to find its way 
-                  to the heart it's meant for."
-                </p>
-              </div>
+            <p>
+              A friend had something important to say—something heartfelt, something that mattered—but no clue how to put it into words. They tried. And failed. Then panicked. Then called Onaamika.
+            </p>
+
+            <p>
+              With nothing but feelings and chaos on the table, she sat down and wrote. No fluff, no filters—just pure emotion, carefully translated into words.
+            </p>
+
+            <p className="text-xl font-semibold text-foreground">
+              When that message was sent, it didn't just land.<br />
+              It connected. It healed. It made someone smile in a way only true words can.
+            </p>
+
+            <p className="text-lg font-medium text-primary italic">
+              That's when the spark lit:<br />
+              What if we could help more people say what they truly feel, but don't know how?
+            </p>
+
+            <div className="bg-gradient-to-r from-pink-50/50 to-purple-50/50 p-8 rounded-3xl border border-pink-200/30">
+              <p className="text-xl font-semibold text-foreground mb-4">Because let's be honest —</p>
+              <p>We live in a world where people are constantly feeling deeply…</p>
+              <p className="font-medium">…but rarely saying it meaningfully.</p>
             </div>
+
+            <p>
+              Most of us are either too busy, too shy, or just not fluent in "emotional poetry."<br />
+              And that's okay. That's where we come in.
+            </p>
+
+            <div className="text-center py-8">
+              <p className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                We're the translators of the heart.
+              </p>
+            </div>
+
+            <p>
+              At The Written Hug, we turn raw, unspoken feelings into beautiful, soul-stirring letters.<br />
+              Love, gratitude, apology, celebration — whatever's on your heart, we craft it into words that move people.
+            </p>
+
+            <p>
+              And we don't just write — we create.<br />
+              Each message is carefully written, lovingly designed, and delivered with a personal touch that feels like a handwritten hug.
+            </p>
+
+            <div className="bg-gradient-to-r from-yellow-50/50 to-orange-50/50 p-8 rounded-3xl border border-yellow-200/30">
+              <p className="text-xl font-semibold text-foreground mb-2">Why?</p>
+              <p>Because in a world full of auto-replies and emoji shortcuts, authentic emotion stands out.</p>
+            </div>
+
+            <p className="text-xl text-center font-medium text-primary">
+              So if you're someone who feels a lot but freezes at the keyboard, don't worry — we've made it our art to say what you can't.
+            </p>
           </div>
         </div>
       </section>
@@ -322,30 +360,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-32 px-6 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              Stories of
-              <br />
-              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Connection
-              </span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Real stories from people whose hearts we've helped express
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Delivery Info Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -398,7 +412,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-16 px-6 bg-muted/10 border-t border-border/50 relative overflow-hidden">
         <div className="max-w-6xl mx-auto text-center relative z-10">
-          <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6">
+          <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6 canduful-font">
             The Written Hug
           </div>
           <p className="text-muted-foreground mb-8">
