@@ -58,33 +58,15 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      toast({
-        title: "Message Received! ❤️",
-        description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        recipientName: '',
-        serviceType: '',
-        feelings: '',
-        story: '',
-        specificDetails: ''
-      });
-      
-    } catch (error) {
-      toast({
-        title: "Oops! Something went wrong",
-        description: "Please try again or contact us directly at onaamikasadguru@gmail.com",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Show success message since FormSubmit will handle the actual submission
+    toast({
+      title: "Message Received! ❤️",
+      description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
+    });
+    
+    // Let FormSubmit handle the actual form submission
+    // The form will redirect after submission
+    setIsSubmitting(false);
   };
 
   return (
@@ -103,6 +85,7 @@ const ContactForm = () => {
         <form action="https://formsubmit.co/onaamikasadguru@gmail.com" method="POST" onSubmit={handleSubmit} className="space-y-8">
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_next" value={window.location.origin + "?submitted=true"} />
           
           {/* Personal Information */}
           <div className="space-y-6">
