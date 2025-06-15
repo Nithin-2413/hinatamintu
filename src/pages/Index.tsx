@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -58,7 +59,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-hidden premium-scroll relative">
       {/* Enhanced Floating Elements that scroll with page */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Heart elements */}
         <div className="absolute top-32 left-16 animate-float opacity-15">
           <Heart className="w-6 h-6 text-pink-300 fill-current" />
@@ -115,7 +116,7 @@ const Index = () => {
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent canduful-font">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
             The Written Hug
           </div>
           <div className="hidden md:flex space-x-8">
@@ -131,7 +132,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br from-pink-50/20 to-purple-50/20 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} 
              style={{ transform: `translateY(${scrollY * 0.1}px)` }} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,182,193,0.08),transparent_50%)]" />
@@ -154,15 +155,15 @@ const Index = () => {
         </div>
         
         <div className={`text-center max-w-5xl mx-auto relative z-10 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight playfair-italic">
+          <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
             <TypingAnimation 
               text="A hug without touch, but meaning so much"
               speed={80}
-              className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent"
             />
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed playfair-italic">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed times-new-roman-italic">
             Your feelings. My words. Their smile.
           </p>
           
@@ -189,8 +190,8 @@ const Index = () => {
       <section id="about" className="py-32 px-6 bg-gradient-to-b from-background to-muted/10 relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 playfair-italic">
-              <span className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 Share a smile,
               </span>
               <br />
@@ -237,11 +238,11 @@ const Index = () => {
       <WhyWeExistSection />
 
       {/* New Business Story Section */}
-      <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden z-10">
+      <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 playfair-italic">
-              <span className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 We Didn't Mean to Start a Business…
               </span>
               <br />
@@ -250,7 +251,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-8 text-lg leading-relaxed text-muted-foreground">
-            <p className="text-xl font-medium text-primary playfair-italic">
+            <p className="text-xl font-medium text-primary times-new-roman-italic">
               It started with a "HELP!" message at 11:11 PM.
             </p>
             
@@ -262,12 +263,12 @@ const Index = () => {
               With nothing but feelings and chaos on the table, she sat down and wrote. No fluff, no filters—just pure emotion, carefully translated into words.
             </p>
 
-            <p className="text-xl font-semibold text-foreground playfair-italic">
+            <p className="text-xl font-semibold text-foreground times-new-roman-italic">
               When that message was sent, it didn't just land.<br />
               It connected. It healed. It made someone smile in a way only true words can.
             </p>
 
-            <p className="text-lg font-medium text-primary playfair-italic">
+            <p className="text-lg font-medium text-primary times-new-roman-italic">
               That's when the spark lit:<br />
               What if we could help more people say what they truly feel, but don't know how?
             </p>
@@ -284,7 +285,7 @@ const Index = () => {
             </p>
 
             <div className="text-center py-8">
-              <p className="text-2xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent playfair-italic">
+              <p className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent times-new-roman-italic">
                 We're the translators of the heart.
               </p>
             </div>
@@ -304,7 +305,7 @@ const Index = () => {
               <p className="times-new-roman-italic">Because in a world full of auto-replies and emoji shortcuts, authentic emotion stands out.</p>
             </div>
 
-            <p className="text-xl text-center font-medium text-primary playfair-italic">
+            <p className="text-xl text-center font-medium text-primary times-new-roman-italic">
               So if you're someone who feels a lot but freezes at the keyboard, don't worry — we've made it our art to say what you can't.
             </p>
           </div>
@@ -312,13 +313,13 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden z-10">
+      <section id="services" className="py-32 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 playfair-italic">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">
               Feelings found in
               <br />
-              <span className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 flowing ink
               </span>
             </h2>
@@ -336,10 +337,10 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-32 px-6 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden z-10">
+      <section id="how-it-works" className="py-32 px-6 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 playfair-italic">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">
               How It Works
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -403,10 +404,10 @@ const Index = () => {
       </section>
 
       {/* Delivery Info Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden z-10">
+      <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="mb-12">
-            <p className="text-2xl font-medium text-primary playfair-italic mb-6">
+            <p className="text-2xl font-medium text-primary times-new-roman-italic mb-6">
               Your feelings, perfectly packaged, arrive exactly where they're meant to live—in the heart.
             </p>
           </div>
@@ -438,13 +439,13 @@ const Index = () => {
       <StillNotSureSection />
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
+      <section id="contact" className="py-32 px-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 playfair-italic">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">
               Share Your Heart
               <br />
-              <span className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 With Us
               </span>
             </h2>
@@ -464,9 +465,9 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-muted/10 border-t border-border/50 relative overflow-hidden z-10">
+      <footer className="py-16 px-6 bg-muted/10 border-t border-border/50 relative overflow-hidden">
         <div className="max-w-6xl mx-auto text-center relative z-10">
-          <div className="text-3xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 canduful-font">
+          <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6 canduful-font">
             The Written Hug
           </div>
           <p className="text-muted-foreground mb-8">

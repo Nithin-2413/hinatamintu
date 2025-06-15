@@ -1,48 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, Star, Sparkles } from 'lucide-react';
 
 const CEOSection = () => {
-  const imageRef = useRef<HTMLImageElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || !imageRef.current) return;
-
-      const container = containerRef.current;
-      const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      const deltaX = (e.clientX - centerX) / (rect.width / 2);
-      const deltaY = (e.clientY - centerY) / (rect.height / 2);
-
-      const rotateY = deltaX * 10; // Max 10 degrees rotation
-      const rotateX = -deltaY * 10; // Negative for natural feel
-
-      container.style.setProperty('--rotate-x', `${rotateX}deg`);
-      container.style.setProperty('--rotate-y', `${rotateY}deg`);
-    };
-
-    const handleMouseLeave = () => {
-      if (!containerRef.current) return;
-      containerRef.current.style.setProperty('--rotate-x', '0deg');
-      containerRef.current.style.setProperty('--rotate-y', '0deg');
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
-      container.addEventListener('mouseleave', handleMouseLeave);
-
-      return () => {
-        container.removeEventListener('mousemove', handleMouseMove);
-        container.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }
-  }, []);
-
   return (
     <section className="py-32 px-6 bg-gradient-to-b from-background to-pink-50/20 relative overflow-hidden">
       {/* Background Decorations */}
@@ -74,8 +35,17 @@ const CEOSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Mobile: Image first, Desktop: Text first */}
-          <div className="order-2 lg:order-1 space-y-8">
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="ceo-image-container">
+              <img
+                src="/lovable-uploads/c3b76b67-4b74-46f2-977b-973f064ca0c4.png"
+                alt="Onaamika Sadguru"
+                className="ceo-image"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-8">
             <div className="relative">
               <h3 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                 Onaamika Sadguru
@@ -121,18 +91,6 @@ const CEOSection = () => {
                   <p className="text-sm text-muted-foreground">Magic & Wonder</p>
                 </CardContent>
               </Card>
-            </div>
-          </div>
-
-          {/* Mobile: Image second, Desktop: Image second */}
-          <div className="order-1 lg:order-2 relative flex justify-center">
-            <div ref={containerRef} className="ceo-image-container group">
-              <img
-                ref={imageRef}
-                src="/lovable-uploads/a880aac8-c4eb-4120-8183-ea6411dd5725.png"
-                alt="Onaamika Sadguru"
-                className="ceo-image-enhanced"
-              />
             </div>
           </div>
         </div>

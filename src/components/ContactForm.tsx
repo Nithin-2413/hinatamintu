@@ -58,15 +58,55 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Show success message since FormSubmit will handle the actual submission
-    toast({
-      title: "Message Received! ❤️",
-      description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
-    });
-    
-    // Let FormSubmit handle the actual form submission
-    // The form will redirect after submission
-    setIsSubmitting(false);
+    try {
+      // Create form data for Formsubmit
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('email', formData.email);
+      submitData.append('phone', formData.phone);
+      submitData.append('recipientName', formData.recipientName);
+      submitData.append('serviceType', formData.serviceType);
+      submitData.append('feelings', formData.feelings);
+      submitData.append('story', formData.story);
+      submitData.append('specificDetails', formData.specificDetails);
+      submitData.append('_subject', 'New Message Request from The Written Hug');
+      submitData.append('_captcha', 'false');
+
+      const response = await fetch('https://formsubmit.co/onaamikasadguru@gmail.com', {
+        method: 'POST',
+        body: submitData
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Received! ❤️",
+          description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          recipientName: '',
+          serviceType: '',
+          feelings: '',
+          story: '',
+          specificDetails: ''
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Oops! Something went wrong",
+        description: "Please try again or contact us directly at onaamikasadguru@gmail.com",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,11 +122,7 @@ const ContactForm = () => {
       </CardHeader>
       
       <CardContent className="p-8">
-        <form action="https://formsubmit.co/onaamikasadguru@gmail.com" method="POST" onSubmit={handleSubmit} className="space-y-8">
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="box" />
-          <input type="hidden" name="_next" value={window.location.origin + "?submitted=true"} />
-          
+        <form onSubmit={handleSubmit} className="space-y-8">
           {/* Personal Information */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Personal Information</h3>

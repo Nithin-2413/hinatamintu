@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, Link, Sparkles } from 'lucide-react';
+import { Heart, Bridge, Sparkles } from 'lucide-react';
 
 const WhyWeExistSection = () => {
   return (
@@ -29,7 +29,7 @@ const WhyWeExistSection = () => {
           </p>
           
           <div className="flex items-center justify-center my-12">
-            <Link className="w-8 h-8 text-purple-500" />
+            <Bridge className="w-8 h-8 text-purple-500" />
           </div>
           
           <p className="text-xl font-medium text-primary times-new-roman-italic">
