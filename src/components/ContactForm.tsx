@@ -51,11 +51,49 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSuccessToast = () => {
-    toast({
-      title: "Message Received! ❤️",
-      description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
-    });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/onaamikasadguru@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Received! ❤️",
+          description: "We've received your story and will reach out within 24 hours.",
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          recipientName: '',
+          serviceType: '',
+          feelings: '',
+          story: '',
+          specificDetails: ''
+        });
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Network Error",
+        description: "Please check your connection and try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -71,17 +109,7 @@ const ContactForm = () => {
       </CardHeader>
 
       <CardContent className="p-8">
-        <form
-          action="https://formsubmit.co/onaamikasadguru@gmail.com"
-          method="POST"
-          onSubmit={handleSuccessToast}
-          className="space-y-8"
-        >
-          {/* Hidden Formsubmit settings */}
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="box" />
-          <input type="hidden" name="_redirect" value="https://thewrittenhug.lovable.site/#thankyou" />
-
+        <form onSubmit={handleSubmit} className="space-y-8">
           {/* Personal Information */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Personal Information</h3>
