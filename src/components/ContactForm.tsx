@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -58,13 +57,12 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      toast({
-        title: "Message Received! ❤️",
-        description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
-      });
-      
-      // Reset form
+    toast({
+      title: "Message Received! ❤️",
+      description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
+    });
+
+    setTimeout(() => {
       setFormData({
         name: '',
         email: '',
@@ -75,16 +73,8 @@ const ContactForm = () => {
         story: '',
         specificDetails: ''
       });
-      
-    } catch (error) {
-      toast({
-        title: "Oops! Something went wrong",
-        description: "Please try again or contact us directly at onaamikasadguru@gmail.com",
-        variant: "destructive"
-      });
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 500);
   };
 
   return (
@@ -100,9 +90,17 @@ const ContactForm = () => {
       </CardHeader>
       
       <CardContent className="p-8">
-        <form action="https://formsubmit.co/onaamikasadguru@gmail.com" method="POST" onSubmit={handleSubmit} className="space-y-8">
+        <form 
+          action="https://formsubmit.co/onaamikasadguru@gmail.com" 
+          method="POST" 
+          onSubmit={handleSubmit}
+          className="space-y-8"
+          target="_self"
+        >
           <input type="hidden" name="_captcha" value="false" />
-          
+          <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_redirect" value="https://thewrittenhug.lovable.site/#thankyou" />
+
           {/* Personal Information */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Personal Information</h3>
@@ -230,7 +228,7 @@ const ContactForm = () => {
             <h4 className="font-semibold mb-2 text-primary">Delivery Information</h4>
             <p className="text-sm text-muted-foreground">
               • We deliver all over India with standard free delivery<br />
-              • Delivery timeline: 10-15 days<br />
+              • Delivery timeline: 10–15 days<br />
               • You'll receive updates via email and phone<br />
               • Contact us at onaamikasadguru@gmail.com for any queries
             </p>
