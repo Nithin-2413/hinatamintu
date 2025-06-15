@@ -54,57 +54,49 @@ const ContactForm = () => {
     'Custom Request'
   ];
 
-  const sendEmail = async (formData: FormData) => {
-    // This would typically send to your backend API
-    // For now, we'll simulate the email functionality
-    const emailContent = `
-      New Form Submission from The Written Hug:
-      
-      Name: ${formData.name}
-      Email: ${formData.email}
-      Phone: ${formData.phone}
-      Recipient: ${formData.recipientName}
-      Service Type: ${formData.serviceType}
-      Feelings: ${formData.feelings}
-      Story: ${formData.story}
-      Specific Details: ${formData.specificDetails}
-    `;
-    
-    console.log('Email would be sent with content:', emailContent);
-    
-    // In a real implementation, you would:
-    // 1. Send this to your backend API
-    // 2. Use a service like EmailJS, Nodemailer, or SendGrid
-    // 3. Or integrate with Supabase Edge Functions
-    
-    return new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await sendEmail(formData);
-      
-      toast({
-        title: "Message Received! ❤️",
-        description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
+      // Create form data for Formsubmit
+      const submitData = new FormData();
+      submitData.append('name', formData.name);
+      submitData.append('email', formData.email);
+      submitData.append('phone', formData.phone);
+      submitData.append('recipientName', formData.recipientName);
+      submitData.append('serviceType', formData.serviceType);
+      submitData.append('feelings', formData.feelings);
+      submitData.append('story', formData.story);
+      submitData.append('specificDetails', formData.specificDetails);
+      submitData.append('_subject', 'New Message Request from The Written Hug');
+      submitData.append('_captcha', 'false');
+
+      const response = await fetch('https://formsubmit.co/onaamikasadguru@gmail.com', {
+        method: 'POST',
+        body: submitData
       });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        recipientName: '',
-        serviceType: '',
-        feelings: '',
-        story: '',
-        specificDetails: ''
-      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Received! ❤️",
+          description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          recipientName: '',
+          serviceType: '',
+          feelings: '',
+          story: '',
+          specificDetails: ''
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
       
     } catch (error) {
       toast({

@@ -6,6 +6,10 @@ import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, Me
 import ContactForm from '@/components/ContactForm';
 import ServiceCard from '@/components/ServiceCard';
 import CEOSection from '@/components/CEOSection';
+import TypingAnimation from '@/components/TypingAnimation';
+import FAQSection from '@/components/FAQSection';
+import WhyWeExistSection from '@/components/WhyWeExistSection';
+import StillNotSureSection from '@/components/StillNotSureSection';
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -152,19 +156,21 @@ const Index = () => {
         
         <div className={`text-center max-w-5xl mx-auto relative z-10 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
-            <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              A hug without touch,
-            </span>
-            <br />
-            <span className="text-foreground">
-              but meaning so much
-            </span>
+            <TypingAnimation 
+              text="A hug without touch, but meaning so much"
+              speed={80}
+              className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent"
+            />
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed times-new-roman-italic">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed times-new-roman-italic">
             Your feelings. My words. Their smile.
-            <br />
+          </p>
+          
+          <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
             We help you express what your heart holds but words can't quite say.
+            <br />
+            In every unspoken moment, there lives a feeling waiting for its voice—let us help you set it free.
           </p>
           
           <div className="flex justify-center">
@@ -182,7 +188,7 @@ const Index = () => {
 
       {/* About Section */}
       <section id="about" className="py-32 px-6 bg-gradient-to-b from-background to-muted/10 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
               <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
@@ -228,9 +234,12 @@ const Index = () => {
       {/* CEO Section */}
       <CEOSection />
 
+      {/* Why We Exist Section */}
+      <WhyWeExistSection />
+
       {/* New Business Story Section */}
       <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
               <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
@@ -305,7 +314,7 @@ const Index = () => {
 
       {/* Services Section */}
       <section id="services" className="py-32 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
               Feelings found in
@@ -329,7 +338,7 @@ const Index = () => {
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-32 px-6 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden">
-        <div className="max-w-6xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.025}px)` }}>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
               How It Works
@@ -423,9 +432,15 @@ const Index = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Still Not Sure Section */}
+      <StillNotSureSection />
+
       {/* Contact Section */}
       <section id="contact" className="py-32 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10" style={{ transform: `translateY(${scrollY * -0.02}px)` }}>
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
               Share Your Heart

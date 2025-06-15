@@ -36,11 +36,11 @@ const CEOSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative flex justify-center lg:justify-end">
-            <div className="w-80 h-80 relative">
+            <div className="ceo-image-container">
               <img
                 src="/lovable-uploads/c3b76b67-4b74-46f2-977b-973f064ca0c4.png"
                 alt="Onaamika Sadguru"
-                className="w-full h-full object-contain rounded-3xl"
+                className="ceo-image"
               />
             </div>
           </div>
@@ -65,7 +65,7 @@ const CEOSection = () => {
                 space between heartbeats.
               </p>
               
-              <p className="text-lg font-medium text-primary">
+              <p className="text-lg font-medium text-primary times-new-roman-italic">
                 "Every emotion deserves to be heard, every feeling deserves to find its way 
                 to the heart it's meant for."
               </p>
