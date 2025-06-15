@@ -59,44 +59,22 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Create form data for Formsubmit
-      const submitData = new FormData();
-      submitData.append('name', formData.name);
-      submitData.append('email', formData.email);
-      submitData.append('phone', formData.phone);
-      submitData.append('recipientName', formData.recipientName);
-      submitData.append('serviceType', formData.serviceType);
-      submitData.append('feelings', formData.feelings);
-      submitData.append('story', formData.story);
-      submitData.append('specificDetails', formData.specificDetails);
-      submitData.append('_subject', 'New Message Request from The Written Hug');
-      submitData.append('_captcha', 'false');
-
-      const response = await fetch('https://formsubmit.co/onaamikasadguru@gmail.com', {
-        method: 'POST',
-        body: submitData
+      toast({
+        title: "Message Received! ❤️",
+        description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
       });
-
-      if (response.ok) {
-        toast({
-          title: "Message Received! ❤️",
-          description: "We'll start crafting your beautiful message and get back to you within 24 hours.",
-        });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          recipientName: '',
-          serviceType: '',
-          feelings: '',
-          story: '',
-          specificDetails: ''
-        });
-      } else {
-        throw new Error('Form submission failed');
-      }
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        recipientName: '',
+        serviceType: '',
+        feelings: '',
+        story: '',
+        specificDetails: ''
+      });
       
     } catch (error) {
       toast({
@@ -122,7 +100,9 @@ const ContactForm = () => {
       </CardHeader>
       
       <CardContent className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form action="https://formsubmit.co/onaamikasadguru@gmail.com" method="POST" onSubmit={handleSubmit} className="space-y-8">
+          <input type="hidden" name="_captcha" value="false" />
+          
           {/* Personal Information */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Personal Information</h3>
