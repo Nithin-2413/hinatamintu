@@ -31,19 +31,9 @@ const ContactForm = () => {
     specificDetails: ''
   });
 
-  const serviceTypes = [
-    'Love Letter',
-    'Gratitude Message',
-    'Apology Letter',
-    'Birthday Message',
-    'Anniversary Letter',
-    'Thank You Note',
-    'Friendship Letter',
-    'Family Message',
-    'Custom Request'
-  ];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -51,25 +41,26 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // stop page reload / redirect
 
     try {
       const response = await fetch("https://formsubmit.co/ajax/onaamikasadguru@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
         toast({
-          title: "Message Received! ❤️",
-          description: "We've received your story and will reach out within 24 hours.",
+          title: "Message Sent! ❤️",
+          description: "Thank you for sharing your story. We'll reach out within 24 hours."
         });
 
+        // reset form
         setFormData({
           name: '',
           email: '',
@@ -82,19 +73,25 @@ const ContactForm = () => {
         });
       } else {
         toast({
-          title: "Submission Failed",
-          description: "Something went wrong. Please try again.",
+          title: "Failed to Send",
+          description: "Please try again later.",
           variant: "destructive"
         });
       }
     } catch (error) {
       toast({
         title: "Network Error",
-        description: "Please check your connection and try again.",
+        description: "Please check your connection.",
         variant: "destructive"
       });
     }
   };
+
+  const serviceTypes = [
+    'Love Letter', 'Gratitude Message', 'Apology Letter',
+    'Birthday Message', 'Anniversary Letter', 'Thank You Note',
+    'Friendship Letter', 'Family Message', 'Custom Request'
+  ];
 
   return (
     <Card className="max-w-4xl mx-auto shadow-2xl border-0 bg-gradient-to-br from-background to-muted/30">
@@ -110,146 +107,77 @@ const ContactForm = () => {
 
       <CardContent className="p-8">
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Personal Information */}
+          {/* No action or method attributes here */}
+
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Personal Information</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="name">Your Name *</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Your full name"
-                  required
-                  className="h-12"
-                />
+                <Label>Your Name *</Label>
+                <Input name="name" required value={formData.name} onChange={handleInputChange} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="your.email@example.com"
-                  required
-                  className="h-12"
-                />
+                <Label>Email Address *</Label>
+                <Input name="email" type="email" required value={formData.email} onChange={handleInputChange} />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number *</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="+91 XXXXX XXXXX"
-                required
-                className="h-12"
-              />
+              <Label>Phone Number *</Label>
+              <Input name="phone" type="tel" required value={formData.phone} onChange={handleInputChange} />
             </div>
           </div>
 
-          {/* Message Details */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Message Details</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="recipientName">Recipient's Name *</Label>
-                <Input
-                  id="recipientName"
-                  name="recipientName"
-                  value={formData.recipientName}
-                  onChange={handleInputChange}
-                  placeholder="Who is this message for?"
-                  required
-                  className="h-12"
-                />
+                <Label>Recipient's Name *</Label>
+                <Input name="recipientName" required value={formData.recipientName} onChange={handleInputChange} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="serviceType">Type of Message *</Label>
+                <Label>Type of Message *</Label>
                 <select
-                  id="serviceType"
                   name="serviceType"
+                  required
                   value={formData.serviceType}
                   onChange={handleInputChange}
-                  required
                   className="w-full h-12 px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <option value="">Select message type</option>
-                  {serviceTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
+                  <option value="">Select type</option>
+                  {serviceTypes.map(type => <option key={type}>{type}</option>)}
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Feelings & Story */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-primary">Your Story</h3>
             <div className="space-y-2">
-              <Label htmlFor="feelings">What feelings do you want to express? *</Label>
-              <Textarea
-                id="feelings"
-                name="feelings"
-                value={formData.feelings}
-                onChange={handleInputChange}
-                placeholder="Love, gratitude, apology, appreciation…"
-                required
-                className="min-h-[100px] resize-none"
-              />
+              <Label>Feelings *</Label>
+              <Textarea name="feelings" required value={formData.feelings} onChange={handleInputChange} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="story">Tell us your story *</Label>
-              <Textarea
-                id="story"
-                name="story"
-                value={formData.story}
-                onChange={handleInputChange}
-                placeholder="Share your background, relationship, special moment…"
-                required
-                className="min-h-[120px] resize-none"
-              />
+              <Label>Story *</Label>
+              <Textarea name="story" required value={formData.story} onChange={handleInputChange} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="specificDetails">Specific details to include (Optional)</Label>
-              <Textarea
-                id="specificDetails"
-                name="specificDetails"
-                value={formData.specificDetails}
-                onChange={handleInputChange}
-                placeholder="Memories, inside jokes, moments…"
-                className="min-h-[80px] resize-none"
-              />
+              <Label>Specific Details</Label>
+              <Textarea name="specificDetails" value={formData.specificDetails} onChange={handleInputChange} />
             </div>
           </div>
 
-          {/* Delivery Info */}
           <div className="p-6 bg-muted/50 rounded-lg">
             <h4 className="font-semibold mb-2 text-primary">Delivery Information</h4>
             <p className="text-sm text-muted-foreground">
               • Delivery all over India<br />
               • Timeline: 10-15 days<br />
-              • You'll receive email/phone updates<br />
               • Contact: onaamikasadguru@gmail.com
             </p>
           </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            className="w-full h-14 text-lg bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 transition-all duration-300 group"
-          >
+          <Button type="submit" className="w-full h-14 text-lg bg-gradient-to-r from-primary to-purple-600">
             <div className="flex items-center gap-3">
-              <Send className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Send className="h-5 w-5" />
               Send My Story
             </div>
           </Button>
