@@ -38,7 +38,7 @@ const CEOSection = () => {
           <div className="relative flex justify-center lg:justify-end">
             <div className="ceo-image-container">
               <img
-                src="/lovable-uploads/c3b76b67-4b74-46f2-977b-973f064ca0c4.png"
+                src="/lovable-uploads/a880aac8-c4eb-4120-8183-ea6411dd5725.png"
                 alt="Onaamika Sadguru"
                 className="ceo-image"
               />

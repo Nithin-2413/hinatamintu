@@ -59,7 +59,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-hidden premium-scroll relative">
       {/* Enhanced Floating Elements that scroll with page */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Heart elements */}
         <div className="absolute top-32 left-16 animate-float opacity-15">
           <Heart className="w-6 h-6 text-pink-300 fill-current" />
@@ -132,7 +132,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-br from-pink-50/20 to-purple-50/20 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} 
              style={{ transform: `translateY(${scrollY * 0.1}px)` }} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,182,193,0.08),transparent_50%)]" />
@@ -238,7 +238,7 @@ const Index = () => {
       <WhyWeExistSection />
 
       {/* New Business Story Section */}
-      <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden">
+      <section className="py-32 px-6 bg-gradient-to-b from-pink-50/10 to-purple-50/10 relative overflow-hidden z-10">
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
@@ -313,7 +313,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 px-6 relative overflow-hidden">
+      <section id="services" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
@@ -337,7 +337,7 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-32 px-6 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden">
+      <section id="how-it-works" className="py-32 px-6 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden z-10">
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
@@ -404,7 +404,7 @@ const Index = () => {
       </section>
 
       {/* Delivery Info Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden">
+      <section className="py-20 px-6 bg-gradient-to-r from-pink-50/30 to-purple-50/30 relative overflow-hidden z-10">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="mb-12">
             <p className="text-2xl font-medium text-primary times-new-roman-italic mb-6">
@@ -439,7 +439,7 @@ const Index = () => {
       <StillNotSureSection />
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 px-6 relative overflow-hidden">
+      <section id="contact" className="py-32 px-6 relative overflow-hidden z-10">
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold mb-8">
@@ -465,7 +465,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-muted/10 border-t border-border/50 relative overflow-hidden">
+      <footer className="py-16 px-6 bg-muted/10 border-t border-border/50 relative overflow-hidden z-10">
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6 canduful-font">
             The Written Hug
