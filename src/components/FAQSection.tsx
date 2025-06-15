@@ -18,7 +18,7 @@ const FAQSection = () => {
   const faqs = [
     {
       question: "Who writes the messages?",
-      answer: "A team led by Onaamika Sadguru — our Chief Emotions Officer — carefully crafts every message with love and authenticity."
+      answer: "Our CEO personally cooks up every recipe of emotions. Onaamika Sadguru crafts each message with her own hands, heart, and soul — no outsourcing, no templates, just pure authentic expression."
     },
     {
       question: "Can I review the message before it's sent?",
