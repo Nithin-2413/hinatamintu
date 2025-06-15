@@ -102,6 +102,7 @@ const ContactForm = () => {
       <CardContent className="p-8">
         <form action="https://formsubmit.co/onaamikasadguru@gmail.com" method="POST" onSubmit={handleSubmit} className="space-y-8">
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="box" />
           
           {/* Personal Information */}
           <div className="space-y-6">

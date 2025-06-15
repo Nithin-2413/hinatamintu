@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Plus, Minus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 const FAQSection = () => {
@@ -11,7 +11,7 @@ const FAQSection = () => {
     setOpenItems(prev => 
       prev.includes(index) 
         ? prev.filter(i => i !== index)
-        : [...prev, index]
+        : [index] // Only allow one item to be open at a time
     );
   };
 
@@ -62,17 +62,19 @@ const FAQSection = () => {
                   className="w-full p-6 text-left flex justify-between items-center hover:bg-muted/20 transition-colors duration-200"
                 >
                   <h3 className="text-lg font-semibold pr-4">{faq.question}</h3>
-                  {openItems.includes(index) ? (
-                    <Minus className="h-5 w-5 text-primary flex-shrink-0" />
-                  ) : (
-                    <Plus className="h-5 w-5 text-primary flex-shrink-0" />
-                  )}
+                  <ChevronDown 
+                    className={`h-5 w-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+                      openItems.includes(index) ? 'rotate-180' : ''
+                    }`} 
+                  />
                 </button>
-                {openItems.includes(index) && (
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  openItems.includes(index) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}>
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
                   </div>
-                )}
+                </div>
               </CardContent>
             </Card>
           ))}
