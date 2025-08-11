@@ -35,7 +35,7 @@ MAILJET_TEMPLATE_ID_REPLY=7221146
 ✅ **No Functionality Changes**: Your app works exactly the same
 ✅ **Same Features**: Form submissions, admin system, email notifications
 ✅ **Same Database**: Still uses Supabase
-✅ **Same Admin**: Login with SonuHoney/Chipmunk@15#
+✅ **Same Admin**: Login with CEO-The Written Hug/Chipmunk@15#
 
 ### Technical Changes:
 - Converted Express routes to Vercel serverless functions

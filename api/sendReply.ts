@@ -30,7 +30,7 @@ async function sendReplyEmail(clientEmail: string, emailData: any) {
           {
             From: {
               Email: process.env.ADMIN_FROM_EMAIL || '',
-              Name: "SonuHoney - The Written Hug"
+              Name: "CEO-The Written Hug"
             },
             To: [
               {
@@ -40,7 +40,7 @@ async function sendReplyEmail(clientEmail: string, emailData: any) {
             ],
             TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_REPLY || '7221146'),
             TemplateLanguage: true,
-            Subject: "You've Got a Kabootar from SonuHoney",
+            Subject: "You've Got a Kabootar from CEO-The Written Hug",
             Variables: {
               client_name: emailData.client_name,
               reply_message: emailData.reply_message,
@@ -66,13 +66,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const validatedData = sendReplySchema.parse(req.body);
 
-    // Insert reply into database with SonuHoney as sender (note: table name has space)
+    // Insert reply into database with CEO-The Written Hug as sender (note: table name has space)
     const { data: reply, error: replyError } = await supabaseAdmin
       .from('hug replies')
       .insert([{
         hugid: validatedData.hugid,
         sender_type: 'admin',
-        sender_name: 'SonuHoney',
+        sender_name: 'CEO-The Written Hug',
         message: validatedData.message,
       }])
       .select()

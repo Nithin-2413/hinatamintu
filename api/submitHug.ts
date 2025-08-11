@@ -37,7 +37,7 @@ async function sendSubmissionEmail(formData: any) {
           {
             From: {
               Email: process.env.ADMIN_FROM_EMAIL || '',
-              Name: "The Written Hug"
+              Name: "CEO-The Written Hug"
             },
             To: [
               {

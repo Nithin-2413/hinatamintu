@@ -15,7 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { username, password } = adminLoginSchema.parse(req.body);
     
     // Simple hardcoded admin credentials
-    if (username === 'SonuHoney' && password === 'Chipmunk@15#') {
+    if (username === 'CEO-The Written Hug' && password === 'Chipmunk@15#') {
       res.json({ success: true, message: 'Login successful' });
     } else {
       res.status(401).json({ success: false, message: 'Invalid credentials' });

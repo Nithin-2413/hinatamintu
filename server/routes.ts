@@ -141,13 +141,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = sendReplySchema.parse(req.body);
 
-      // Insert reply into database with SonuHoney as sender (note: table name has space)
+      // Insert reply into database with CEO-The Written Hug as sender (note: table name has space)
       const { data: reply, error: replyError } = await supabaseAdmin
         .from('hug replies')
         .insert([{
           hugid: validatedData.hugid,
           sender_type: 'admin',
-          sender_name: 'SonuHoney',
+          sender_name: 'CEO-The Written Hug',
           message: validatedData.message,
         }])
         .select()
@@ -196,7 +196,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { username, password } = adminLoginSchema.parse(req.body);
       
       // Simple authentication check
-      if (username === "SonuHoney" && password === "Chipmunk@15#") {
+      if (username === "CEO-The Written Hug" && password === "Chipmunk@15#") {
         res.json({ success: true, message: "Login successful" });
       } else {
         res.status(401).json({ success: false, message: "Invalid credentials" });

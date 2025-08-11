@@ -39,7 +39,7 @@ This email must contain all form fields in a beautiful HTML table (rose-pink the
 2️⃣ Admin Login
 There will be a separate Admin Login page (not public).
 
-Username: SonuHoney
+Username: CEO-The Written Hug
 Password: Chipmunk@15#
 
 On successful login → redirect to Orders Page (Admin Panel).
@@ -71,7 +71,7 @@ hugid = the selected written hug.id
 
 sender_type = "admin"
 
-sender_name = "SonuHoney"
+sender_name = "CEO-The Written Hug"
 
 message = reply text.
 
