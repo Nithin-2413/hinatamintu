@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Great+Vibes&display=swap');
 @import url('https://fonts.cdnfonts.com/css/canduful');
 
 @tailwind base;
@@ -104,6 +104,10 @@
 
   .canduful-font {
     font-family: 'Canduful', cursive, 'Playfair Display', serif;
+  }
+  
+  .great-vibes-font {
+    font-family: 'Great Vibes', cursive;
   }
 }
 
@@ -282,6 +286,24 @@ html {
 .parallax-premium {
   will-change: transform;
   transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 3D Image Hover Effect */
+.image-3d-hover {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.image-3d-hover:hover {
+  transform: rotateX(5deg) rotateY(5deg) scale(1.05);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image-3d-hover:hover .image-3d-content {
+  transform: translateZ(20px);
 }
 
 /* Premium button with smooth shimmer effect */

@@ -13,6 +13,7 @@ interface FormData {
   phone: string;
   recipientName: string;
   serviceType: string;
+  deliveryType: string;
   feelings: string;
   story: string;
   specificDetails: string;
@@ -26,6 +27,7 @@ const ContactForm = () => {
     phone: '',
     recipientName: '',
     serviceType: '',
+    deliveryType: '',
     feelings: '',
     story: '',
     specificDetails: ''
@@ -67,6 +69,7 @@ const ContactForm = () => {
           phone: '',
           recipientName: '',
           serviceType: '',
+          deliveryType: '',
           feelings: '',
           story: '',
           specificDetails: ''
@@ -147,6 +150,20 @@ const ContactForm = () => {
                   {serviceTypes.map(type => <option key={type}>{type}</option>)}
                 </select>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Delivery Type *</Label>
+              <select
+                name="deliveryType"
+                required
+                value={formData.deliveryType}
+                onChange={handleInputChange}
+                className="w-full h-12 px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <option value="">Select delivery type</option>
+                <option value="Standard Delivery">Standard Delivery (10-15 days)</option>
+                <option value="Express Delivery">Express Delivery (5-7 days)</option>
+              </select>
             </div>
           </div>
 

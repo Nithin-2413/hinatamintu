@@ -36,11 +36,11 @@ const CEOSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative flex justify-center lg:justify-end">
-            <div className="ceo-image-container">
+            <div className="ceo-image-container image-3d-hover">
               <img
                 src="/lovable-uploads/a880aac8-c4eb-4120-8183-ea6411dd5725.png"
                 alt="Onaamika Sadguru"
-                className="ceo-image"
+                className="ceo-image image-3d-content"
               />
             </div>
           </div>

@@ -34,25 +34,29 @@ const Index = () => {
       title: "Love Letters",
       description: "Express your deepest feelings with beautifully crafted love letters that speak directly to the heart.",
       image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&h=600&fit=crop",
-      price: "₹599"
+      price: "₹899",
+      note: "Add-ons available based on specific requirements"
     },
     {
       title: "Gratitude Messages", 
       description: "Say thank you in the most meaningful way with personalized gratitude letters that touch souls.",
       image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&h=600&fit=crop",
-      price: "₹499"
+      price: "₹899",
+      note: "Add-ons available based on specific requirements"
     },
     {
       title: "Apology Letters",
       description: "Mend hearts and relationships with sincere, heartfelt apology messages that heal wounds.",
       image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=600&fit=crop",
-      price: "₹499"
+      price: "₹799",
+      note: "Add-ons available based on specific requirements"
     },
     {
       title: "Special Occasions",
       description: "Make birthdays, anniversaries, and milestones unforgettable with custom emotional messages.",
       image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&h=600&fit=crop",
-      price: "₹799"
+      price: "₹1099",
+      note: "Add-ons available based on specific requirements"
     }
   ];
 
@@ -116,8 +120,11 @@ const Index = () => {
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            The Written Hug
+          <div className="flex items-center space-x-3">
+            <img src="/favicon.png" alt="The Written Hug" className="w-8 h-8" />
+            <div className="text-3xl great-vibes-font bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              The Written Hug
+            </div>
           </div>
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-105">About</a>
