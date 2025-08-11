@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Link } from 'wouter';
-import { Eye, Calendar, Mail, User } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
+import { Eye, Calendar, Mail, User, LogOut, Heart, MessageSquare } from 'lucide-react';
 
 interface Hug {
   id: string;
@@ -20,21 +20,29 @@ interface Hug {
 const AdminOrders = () => {
   const [hugs, setHugs] = useState<Hug[]>([]);
   const [loading, setLoading] = useState(true);
-  const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  const authenticate = () => {
-    if (password === 'admin123') { // Simple password check
+  useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('adminLoggedIn');
+    if (isLoggedIn === 'true') {
       setAuthenticated(true);
       fetchHugs();
     } else {
-      toast({
-        title: "Access Denied",
-        description: "Invalid password",
-        variant: "destructive"
-      });
+      setLocation('/admin/login');
     }
+  }, [setLocation]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('adminUsername');
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out",
+    });
+    setLocation('/admin/login');
   };
 
   const fetchHugs = async () => {
@@ -63,29 +71,7 @@ const AdminOrders = () => {
   };
 
   if (!authenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl great-vibes-font bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-              Admin Access
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              type="password"
-              placeholder="Enter admin password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && authenticate()}
-            />
-            <Button onClick={authenticate} className="w-full bg-gradient-to-r from-pink-600 to-purple-600">
-              Access Admin Panel
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    return null; // Will redirect to login page
   }
 
   if (loading) {
@@ -97,69 +83,146 @@ const AdminOrders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 p-6">
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold great-vibes-font bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-            Orders Dashboard
-          </h1>
-          <Link href="/">
-            <Button variant="outline">Back to Website</Button>
-          </Link>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-rose-400 to-pink-600 rounded-full flex items-center justify-center">
+              <Heart className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold great-vibes-font bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                Orders Dashboard
+              </h1>
+              <p className="text-rose-600 font-medium">Welcome back, {localStorage.getItem('adminUsername')}</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Link href="/">
+              <Button variant="outline" className="border-rose-200 text-rose-700 hover:bg-rose-50">
+                Public Site
+              </Button>
+            </Link>
+            <Button onClick={handleLogout} variant="outline" className="border-rose-200 text-rose-700 hover:bg-rose-50">
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
 
-        <div className="grid gap-6">
-          {hugs.map((hug) => (
-            <Card key={hug.id} className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="grid md:grid-cols-4 gap-4 items-center">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <User className="h-4 w-4 text-pink-600" />
-                      <span className="font-semibold">{hug.Name}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Mail className="h-4 w-4" />
-                      <span>{hug['Email Address']}</span>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="font-medium">{hug['Type of Message']}</div>
-                    <div className="text-sm text-muted-foreground">For: {hug['Recipient\'s Name']}</div>
-                  </div>
-                  
-                  <div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(hug.Date).toLocaleDateString()}</span>
-                    </div>
-                    <div className={`inline-block px-2 py-1 rounded-full text-xs ${
-                      hug.Status === 'New' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      {hug.Status}
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-end">
-                    <Link href={`/admin/${hug.id}`}>
-                      <Button size="sm" className="bg-gradient-to-r from-pink-600 to-purple-600">
-                        <Eye className="h-4 w-4 mr-2" />
-                        View Conversation
-                      </Button>
-                    </Link>
-                  </div>
+        {/* Stats Cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <Card className="border-rose-200 bg-gradient-to-br from-rose-50 to-pink-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-rose-600 font-medium">Total Orders</p>
+                  <p className="text-3xl font-bold text-rose-800">{hugs.length}</p>
                 </div>
-                
-                <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-700 line-clamp-2">
-                    {hug.Feelings?.substring(0, 150)}...
+                <MessageSquare className="h-8 w-8 text-rose-500" />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-rose-200 bg-gradient-to-br from-green-50 to-emerald-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-emerald-600 font-medium">New Orders</p>
+                  <p className="text-3xl font-bold text-emerald-800">
+                    {hugs.filter(h => h.Status === 'New').length}
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+                <User className="h-8 w-8 text-emerald-500" />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-rose-200 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-indigo-600 font-medium">Replied</p>
+                  <p className="text-3xl font-bold text-indigo-800">
+                    {hugs.filter(h => h.Status === 'Replied').length}
+                  </p>
+                </div>
+                <Mail className="h-8 w-8 text-indigo-500" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* Orders Table */}
+        <Card className="border-rose-200 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-rose-100 to-pink-100 border-b border-rose-200">
+            <CardTitle className="text-xl text-rose-800">Recent Orders</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-rose-50 border-b border-rose-200">
+                  <tr>
+                    <th className="text-left p-4 font-medium text-rose-700">Name</th>
+                    <th className="text-left p-4 font-medium text-rose-700">Date</th>
+                    <th className="text-left p-4 font-medium text-rose-700">Recipient's Name</th>
+                    <th className="text-left p-4 font-medium text-rose-700">Email Address</th>
+                    <th className="text-left p-4 font-medium text-rose-700">Status</th>
+                    <th className="text-center p-4 font-medium text-rose-700">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hugs.map((hug, index) => (
+                    <tr 
+                      key={hug.id} 
+                      className={`border-b border-rose-100 hover:bg-rose-25 transition-colors cursor-pointer ${
+                        index % 2 === 0 ? 'bg-white' : 'bg-rose-25'
+                      }`}
+                      onClick={() => window.location.href = `/admin/conversation/${hug.id}`}
+                    >
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full flex items-center justify-center">
+                            <User className="h-4 w-4 text-white" />
+                          </div>
+                          <span className="font-medium text-gray-900">{hug.Name}</span>
+                        </div>
+                      </td>
+                      <td className="p-4 text-gray-600">
+                        {new Date(hug.Date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </td>
+                      <td className="p-4 text-gray-900 font-medium">{hug['Recipient\'s Name']}</td>
+                      <td className="p-4 text-gray-600">{hug['Email Address']}</td>
+                      <td className="p-4">
+                        <Badge 
+                          variant={hug.Status === 'New' ? 'default' : 'secondary'}
+                          className={hug.Status === 'New' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-rose-100 text-rose-800 hover:bg-rose-200'}
+                        >
+                          {hug.Status}
+                        </Badge>
+                      </td>
+                      <td className="p-4 text-center">
+                        <Link href={`/admin/conversation/${hug.id}`}>
+                          <Button 
+                            size="sm" 
+                            className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Eye className="h-4 w-4 mr-2" />
+                            View
+                          </Button>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
 
         {hugs.length === 0 && (
           <div className="text-center py-12">

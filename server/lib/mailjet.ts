@@ -43,13 +43,13 @@ export async function sendSubmissionEmail(params: EmailSubmissionParams): Promis
           },
           To: [
             {
-              Email: process.env.ADMIN_EMAIL,
+              Email: "onaamikasadguru@gmail.com",
               Name: "Admin"
             }
           ],
-          TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_SUBMISSION || '7221146'),
+          TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_SUBMISSION || '7221431'),
           TemplateLanguage: true,
-          Subject: "New Submission - The Written Hug",
+          Subject: `You've Got a Kabootar from ${params.name}`,
           Variables: {
             name: params.name,
             recipient_name: params.recipient_name,
@@ -82,7 +82,7 @@ export async function sendReplyEmail(clientEmail: string, params: EmailReplyPara
         {
           From: {
             Email: process.env.ADMIN_FROM_EMAIL,
-            Name: params.admin_name
+            Name: "SonuHoney"
           },
           To: [
             {
@@ -90,13 +90,13 @@ export async function sendReplyEmail(clientEmail: string, params: EmailReplyPara
               Name: params.client_name
             }
           ],
-          TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_REPLY || '7221431'),
+          TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_REPLY || '7221146'),
           TemplateLanguage: true,
-          Subject: "Reply from The Written Hug",
+          Subject: "You've Got a Kabootar from SonuHoney",
           Variables: {
             client_name: params.client_name,
             reply_message: params.reply_message,
-            admin_name: params.admin_name,
+            admin_name: "SonuHoney",
             reply_link: params.reply_link || '',
             from_email: params.from_email,
             admin_panel_link: params.admin_panel_link || ''

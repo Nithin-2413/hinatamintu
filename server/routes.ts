@@ -23,6 +23,11 @@ const sendReplySchema = z.object({
   admin_name: z.string(),
 });
 
+const adminLoginSchema = z.object({
+  username: z.string(),
+  password: z.string(),
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Submit hug form
   app.post("/api/submitHug", async (req, res) => {
@@ -50,7 +55,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (error) throw error;
 
-      // Send email notification to admin
+      // Send email notification to admin using template 7221431
       const emailSent = await sendSubmissionEmail({
         name: validatedData.name,
         recipient_name: validatedData.recipientName,
@@ -136,13 +141,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = sendReplySchema.parse(req.body);
 
-      // Insert reply into database
+      // Insert reply into database with SonuHoney as sender
       const { data: reply, error: replyError } = await supabaseAdmin
         .from('hug_replies')
         .insert([{
           hugid: validatedData.hugid,
           sender_type: 'admin',
-          sender_name: validatedData.admin_name,
+          sender_name: 'SonuHoney',
           message: validatedData.message,
         }])
         .select()
@@ -169,12 +174,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
         reply_link: `${req.protocol}://${req.get('host')}/admin/${validatedData.hugid}`,
       });
 
+      // Update status to "Replied"
+      await supabaseAdmin
+        .from('written_hug')
+        .update({ Status: 'Replied' })
+        .eq('id', validatedData.hugid);
+
       res.json({ success: true, reply, emailSent });
     } catch (error) {
       console.error('Send reply error:', error);
       res.status(400).json({ 
         success: false, 
         message: error instanceof Error ? error.message : 'Failed to send reply' 
+      });
+    }
+  });
+
+  // Admin login
+  app.post("/api/adminLogin", async (req, res) => {
+    try {
+      const { username, password } = adminLoginSchema.parse(req.body);
+      
+      // Simple authentication check
+      if (username === "SonuHoney" && password === "Chipmunk@15#") {
+        res.json({ success: true, message: "Login successful" });
+      } else {
+        res.status(401).json({ success: false, message: "Invalid credentials" });
+      }
+    } catch (error) {
+      res.status(400).json({ 
+        success: false, 
+        message: "Invalid request" 
       });
     }
   });
