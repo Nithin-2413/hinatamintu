@@ -111,6 +111,14 @@
   }
 }
 
+/* Glass effect for premium navbar */
+.glass-premium {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 /* Times New Roman italic style for hero subtitle */
 .times-new-roman-italic {
   font-family: 'Times New Roman', Times, serif;

@@ -118,13 +118,10 @@ const Index = () => {
       </div>
 
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrollY > 50 ? 'glass-premium border-b border-border/50 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <img src="/favicon.png" alt="The Written Hug" className="w-8 h-8" />
-            <div className="text-3xl great-vibes-font bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              The Written Hug
-            </div>
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            The Written Hug
           </div>
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-105">About</a>

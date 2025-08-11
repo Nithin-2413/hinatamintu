@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Router, Route, Switch } from "wouter";
 import Index from "./pages/Index";
+import AdminOrders from "./pages/AdminOrders";
+import AdminConversation from "./pages/AdminConversation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -16,6 +18,8 @@ const App = () => (
       <Router>
         <Switch>
           <Route path="/" component={Index} />
+          <Route path="/admin" component={AdminOrders} />
+          <Route path="/admin/:id" component={AdminConversation} />
           <Route component={NotFound} />
         </Switch>
       </Router>

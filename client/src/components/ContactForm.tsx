@@ -44,19 +44,20 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // stop page reload / redirect
+    e.preventDefault();
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/onaamikasadguru@gmail.com", {
+      const response = await fetch("/api/submitHug", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
         },
         body: JSON.stringify(formData)
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
         toast({
           title: "Message Sent! ❤️",
           description: "Thank you for sharing your story. We'll reach out within 24 hours."
@@ -77,7 +78,7 @@ const ContactForm = () => {
       } else {
         toast({
           title: "Failed to Send",
-          description: "Please try again later.",
+          description: result.message || "Please try again later.",
           variant: "destructive"
         });
       }
@@ -161,8 +162,8 @@ const ContactForm = () => {
                 className="w-full h-12 px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <option value="">Select delivery type</option>
-                <option value="Standard Delivery">Standard Delivery (10-15 days)</option>
-                <option value="Express Delivery">Express Delivery (5-7 days)</option>
+                <option value="Standard Delivery">Standard Delivery (10 days after dispatch)</option>
+                <option value="Express Delivery">Express Delivery (2-3 days after dispatch)</option>
               </select>
             </div>
           </div>

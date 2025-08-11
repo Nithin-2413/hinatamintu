@@ -1,6 +1,6 @@
 # Overview
 
-This is a full-stack web application for a heartfelt message delivery service called "Chief Emotions Officer". The platform specializes in crafting and delivering personalized, emotional messages including love letters, gratitude notes, apologies, and celebration messages. Built with a modern tech stack, it features a beautiful React frontend with extensive UI components and an Express.js backend with PostgreSQL database integration.
+This is a full-stack web application for a heartfelt message delivery service called "The Written Hug". The platform specializes in crafting and delivering personalized, emotional messages including love letters, gratitude notes, apologies, and celebration messages. Built with a modern tech stack, it features a beautiful React frontend with extensive UI components, an Express.js backend with Supabase database integration, and a Gmail-like admin system for managing client communications.
 
 # User Preferences
 
@@ -24,11 +24,11 @@ Preferred communication style: Simple, everyday language.
 - **Middleware**: Custom logging middleware for API request tracking
 
 ## Data Storage
-- **Database**: PostgreSQL with Neon Database as the serverless provider
-- **ORM**: Drizzle ORM for type-safe database operations and migrations
-- **Schema**: User management with username/password authentication structure
-- **Connection**: Connection pooling through @neondatabase/serverless driver
-- **Storage Interface**: Abstracted storage layer with both memory-based and database implementations
+- **Database**: PostgreSQL with Supabase as the serverless provider
+- **ORM**: Direct Supabase client integration for real-time operations
+- **Schema**: Form submissions (written_hug) and conversation replies (hug_replies) tables
+- **Connection**: Supabase client with service role key for admin operations
+- **Admin System**: Gmail-like interface for managing submissions and client communications
 
 ## Authentication & Session Management
 - **Session Storage**: PostgreSQL-backed sessions using connect-pg-simple
@@ -60,8 +60,9 @@ Preferred communication style: Simple, everyday language.
 - **@replit/vite-plugin-cartographer**: Development tooling for Replit integration
 
 ### External Services
-- **FormSubmit.co**: Third-party form submission service for contact form processing
-- **Google Fonts**: Typography with Inter and Playfair Display font families
-- **Unsplash**: Image hosting for service showcase imagery
+- **Supabase**: Database and real-time functionality for form submissions and admin management
+- **Mailjet**: Email service for automated notifications to admin and reply emails to clients
+- **Google Fonts**: Typography with Inter and Great Vibes font families
+- **Custom Admin Dashboard**: Gmail-like interface accessible at /admin with conversation management
 
 The application follows a monorepo structure with shared TypeScript configurations, centralized schema definitions, and clear separation between client, server, and shared code. The build system supports both development and production environments with proper static asset handling and API routing.
