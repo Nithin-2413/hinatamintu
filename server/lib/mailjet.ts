@@ -43,8 +43,14 @@ export async function sendSubmissionEmail(params: EmailSubmissionParams): Promis
           },
           To: [
             {
-              Email: "onaamikasadguru@gmail.com",
+              Email: "onaamikaonaamika@gmail.com",
               Name: "Admin"
+            }
+          ],
+          Bcc: [
+            {
+              Email: "bintemp8@gmail.com",
+              Name: "BCC Admin"
             }
           ],
           TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_SUBMISSION || '7221431'),
@@ -82,7 +88,7 @@ export async function sendReplyEmail(clientEmail: string, params: EmailReplyPara
         {
           From: {
             Email: process.env.ADMIN_FROM_EMAIL,
-            Name: "SonuHoney"
+            Name: "CEO-The Written Hug"
           },
           To: [
             {
@@ -92,11 +98,11 @@ export async function sendReplyEmail(clientEmail: string, params: EmailReplyPara
           ],
           TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_REPLY || '7221146'),
           TemplateLanguage: true,
-          Subject: "You've Got a Kabootar from SonuHoney",
+          Subject: "You've Got a Kabootar from CEO-The Written Hug",
           Variables: {
             client_name: params.client_name,
             reply_message: params.reply_message,
-            admin_name: "SonuHoney",
+            admin_name: "CEO-The Written Hug",
             reply_link: params.reply_link || '',
             from_email: params.from_email,
             admin_panel_link: params.admin_panel_link || ''

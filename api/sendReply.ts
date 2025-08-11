@@ -44,7 +44,7 @@ async function sendReplyEmail(clientEmail: string, emailData: any) {
             Variables: {
               client_name: emailData.client_name,
               reply_message: emailData.reply_message,
-              admin_name: emailData.admin_name,
+              admin_name: "CEO-The Written Hug",
               from_email: emailData.from_email,
               reply_link: emailData.reply_link,
             }

