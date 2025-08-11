@@ -34,9 +34,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = submitHugSchema.parse(req.body);
       
-      // Insert into Supabase
+      // Insert into Supabase (note: table name has space)
       const { data: hug, error } = await supabaseAdmin
-        .from('written_hug')
+        .from('written hug')
         .insert([{
           'Name': validatedData.name,
           'Recipient\'s Name': validatedData.recipientName,
@@ -84,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/getHugs", async (req, res) => {
     try {
       const { data: hugs, error } = await supabaseAdmin
-        .from('written_hug')
+        .from('written hug')
         .select('*')
         .order('Date', { ascending: false });
 
@@ -110,16 +110,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get the hug
       const { data: hug, error: hugError } = await supabaseAdmin
-        .from('written_hug')
+        .from('written hug')
         .select('*')
         .eq('id', hugid)
         .single();
 
       if (hugError) throw hugError;
 
-      // Get replies
+      // Get replies (note: table name has space)
       const { data: replies, error: repliesError } = await supabaseAdmin
-        .from('hug_replies')
+        .from('hug replies')
         .select('*')
         .eq('hugid', hugid)
         .order('created_at', { ascending: true });
@@ -141,9 +141,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = sendReplySchema.parse(req.body);
 
-      // Insert reply into database with SonuHoney as sender
+      // Insert reply into database with SonuHoney as sender (note: table name has space)
       const { data: reply, error: replyError } = await supabaseAdmin
-        .from('hug_replies')
+        .from('hug replies')
         .insert([{
           hugid: validatedData.hugid,
           sender_type: 'admin',
@@ -157,7 +157,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get client details
       const { data: hug, error: hugError } = await supabaseAdmin
-        .from('written_hug')
+        .from('written hug')
         .select('Name, "Email Address"')
         .eq('id', validatedData.hugid)
         .single();
@@ -176,7 +176,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Update status to "Replied"
       await supabaseAdmin
-        .from('written_hug')
+        .from('written hug')
         .update({ Status: 'Replied' })
         .eq('id', validatedData.hugid);
 

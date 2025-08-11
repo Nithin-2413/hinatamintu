@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Heart, Mail, Star, Users, Clock, MapPin, Sparkles, Gift, MessageCircle, PenTool } from 'lucide-react';
+import { Link } from 'wouter';
 import ContactForm from '@/components/ContactForm';
 import ServiceCard from '@/components/ServiceCard';
 import CEOSection from '@/components/CEOSection';
@@ -483,6 +484,12 @@ const Index = () => {
             <a href="mailto:onaamikasadguru@gmail.com" className="hover:text-primary transition-colors duration-300">
               Contact Us
             </a>
+            <span>•</span>
+            <Link href="/admin/login">
+              <button className="hover:text-primary transition-colors duration-300 underline text-xs">
+                Admin Portal
+              </button>
+            </Link>
           </div>
         </div>
       </footer>
