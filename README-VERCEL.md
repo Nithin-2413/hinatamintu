@@ -1,3 +1,25 @@
+# Deploying to Vercel
+
+1) Set env vars in Vercel:
+- SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+- GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_USER, GMAIL_FROM_NAME
+- GMAIL_REDIRECT_URI_PROD=https://YOUR_VERCEL_DOMAIN.vercel.app/api/google_auth_callback
+- GMAIL_REFRESH_TOKEN (after OAuth below)
+
+2) OAuth to get refresh token
+- Visit `https://YOUR_VERCEL_DOMAIN.vercel.app/api/auth_google`
+- Approve as `thewrittenhug@gmail.com`
+- After redirect, copy refresh_token from Vercel logs and set `GMAIL_REFRESH_TOKEN`
+
+3) DB migrations
+Run the SQL in README.md under "Database migrations" in Supabase SQL editor.
+
+4) Test endpoints
+- POST /api/submitHug
+- GET /api/getHugs
+- GET /api/getConversation?hugid=... 
+- POST /api/sendReply
+- GET /api/pollGmail (trigger sync)
 # Deploy to Vercel
 
 Your application is now Vercel-compatible! Follow these steps to deploy:

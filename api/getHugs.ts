@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { data: hugs, error } = await supabaseAdmin
-      .from('written hug')
+      .from('written_hug')
       .select('*')
       .order('Date', { ascending: false });
 

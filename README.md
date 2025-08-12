@@ -104,3 +104,38 @@ Configure these templates in your Mailjet account:
 ## Deployment
 
 This project is configured for Replit deployment. Simply run the "Start application" workflow to launch both frontend and backend servers.
+
+## Gmail OAuth setup
+- Start the app locally (Replit dev): open `/auth/google` to authorize `thewrittenhug@gmail.com`.
+- On Vercel, use `/api/auth_google` and callback `/api/google_auth_callback`.
+- Copy the `refresh_token` from server logs and set it as `GMAIL_REFRESH_TOKEN` in environment variables.
+
+## Polling Gmail for replies
+- In Replit dev, the server polls every 2 minutes automatically.
+- On Vercel, trigger a one-off sync by calling `/api/pollGmail` (you can set up a cron on Vercel Scheduled Functions).
+
+## Database migrations (run in Supabase SQL editor)
+```
+-- ensure written_hug.id exists and is uuid primary
+alter table written_hug
+  alter column id set default gen_random_uuid();
+
+-- Add Gmail tracking columns to written_hug (if not present)
+alter table written_hug
+  add column if not exists gmail_thread_id text;
+  
+-- Ensure hug_replies has required columns
+alter table hug_replies
+  add column if not exists gmail_message_id text;
+alter table hug_replies
+  add column if not exists gmail_thread_id text;
+alter table hug_replies
+  add column if not exists label_ids text[];
+
+-- Add foreign key if not present
+alter table hug_replies
+  add constraint if not exists fk_hugid foreign key (hugid) references written_hug(id) on delete cascade;
+
+create index if not exists idx_hug_replies_hugid on hug_replies(hugid);
+create index if not exists idx_written_hug_gmail_thread on written_hug(gmail_thread_id);
+```
