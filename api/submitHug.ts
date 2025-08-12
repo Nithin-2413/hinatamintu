@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 import path from 'path';
 import fs from 'fs';
-import { sendHtmlEmail } from '../server/lib/gmail';
+import { sendOutlookHtmlEmail } from '../server/lib/outlook';
 
 const submitHugSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -67,10 +67,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const clientTpl = loadTemplate('form_response_client.html');
     const adminTpl = loadTemplate('notification_admin.html');
 
-    const clientHtml = fill(clientTpl, {
-      client_name: validatedData.name,
-    });
-
+    const clientHtml = fill(clientTpl, { client_name: validatedData.name });
     const adminHtml = fill(adminTpl, {
       name: validatedData.name,
       recipient_name: validatedData.recipientName,
@@ -82,14 +79,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       submission_id: hug.id,
     });
 
-    const toClient = await sendHtmlEmail({
+    const toClient = await sendOutlookHtmlEmail({
       to: validatedData.email,
       cc: 'onaamikasadguru@gmail.com',
       subject: 'We received your Kabootar',
       html: clientHtml,
     });
 
-    await sendHtmlEmail({
+    await sendOutlookHtmlEmail({
       to: 'onaamikasadguru@gmail.com',
       subject: `New Written Hug Submission from ${validatedData.name}`,
       html: adminHtml,
@@ -97,7 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     await supabaseAdmin
       .from('written_hug')
-      .update({ gmail_thread_id: toClient.threadId })
+      .update({ gmail_thread_id: toClient.conversationId })
       .eq('id', hug.id);
 
     await supabaseAdmin
@@ -107,16 +104,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         sender_type: 'admin',
         sender_name: 'CEO - The Written Hug',
         message: '🕊️ We received your Kabootar — our team will review it and get back to you shortly.',
-        gmail_thread_id: toClient.threadId,
+        gmail_thread_id: toClient.conversationId,
         gmail_message_id: toClient.id,
       }]);
 
     res.json({ success: true, hug, emailSent: true });
   } catch (error) {
     console.error('Submit hug error:', error);
-    res.status(400).json({ 
-      success: false, 
-      message: error instanceof Error ? error.message : 'Failed to submit hug' 
-    });
+    res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Failed to submit hug' });
   }
 }

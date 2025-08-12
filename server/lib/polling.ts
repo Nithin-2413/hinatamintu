@@ -1,5 +1,5 @@
 import { supabaseAdmin } from './supabase';
-import { listThreadMessages, getHeader, extractPlainText } from './gmail';
+import { listConversationMessages, extractTextFromGraphMessage } from './outlook';
 
 export async function pollGmailAndSyncOnce(): Promise<{ processed: number }> {
   const { data: hugs, error } = await supabaseAdmin
@@ -9,11 +9,10 @@ export async function pollGmailAndSyncOnce(): Promise<{ processed: number }> {
 
   if (error) throw error;
 
-  const senderAddress = (process.env.GMAIL_USER || 'thewrittenhug@gmail.com').toLowerCase();
   let processed = 0;
 
   for (const hug of hugs || []) {
-    const messages = await listThreadMessages(hug.gmail_thread_id as string);
+    const messages = await listConversationMessages(hug.gmail_thread_id as string);
     for (const message of messages) {
       const messageId = message.id as string;
       const existing = await supabaseAdmin
@@ -24,10 +23,9 @@ export async function pollGmailAndSyncOnce(): Promise<{ processed: number }> {
       if ((existing.data && !Array.isArray(existing.data)) || (existing.data && Array.isArray(existing.data) && existing.data.length > 0)) {
         continue;
       }
-      const headers = message.payload?.headers;
-      const from = (getHeader(headers, 'From') || '').toLowerCase();
-      const body = extractPlainText(message);
-      const sender_type = from.includes(senderAddress) ? 'admin' : 'client';
+      const from = (message.from?.emailAddress?.address || '').toLowerCase();
+      const body = extractTextFromGraphMessage(message);
+      const sender_type = from.includes((process.env.OUTLOOK_USER || '').toLowerCase()) ? 'admin' : 'client';
       await supabaseAdmin
         .from('hug_replies')
         .insert([{
@@ -37,7 +35,7 @@ export async function pollGmailAndSyncOnce(): Promise<{ processed: number }> {
           message: body || '',
           gmail_thread_id: hug.gmail_thread_id,
           gmail_message_id: messageId,
-          label_ids: message.labelIds || [],
+          label_ids: message.categories || [],
         }]);
       processed += 1;
     }
