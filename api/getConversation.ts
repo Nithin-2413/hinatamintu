@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
 const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_URL || '',
   process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 );
 
@@ -21,16 +21,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Get the hug
     const { data: hug, error: hugError } = await supabaseAdmin
-      .from('written hug')
+      .from('written_hug')
       .select('*')
       .eq('id', hugid)
       .single();
 
     if (hugError) throw hugError;
 
-    // Get replies (note: table name has space)
+    // Get replies
     const { data: replies, error: repliesError } = await supabaseAdmin
-      .from('hug replies')
+      .from('hug_replies')
       .select('*')
       .eq('hugid', hugid)
       .order('created_at', { ascending: true });

@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { pollGmailAndSyncOnce } from './lib/polling';
 
 const app = express();
 app.use(express.json());
@@ -52,6 +53,17 @@ app.use((req, res, next) => {
   // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
+    // Start polling Gmail every 2 minutes in development (Replit)
+    setInterval(async () => {
+      try {
+        const { processed } = await pollGmailAndSyncOnce();
+        if (processed > 0) {
+          log(`Synced ${processed} Gmail messages`);
+        }
+      } catch (e:any) {
+        console.error('Polling error', e?.message || e);
+      }
+    }, 120000);
   } else {
     serveStatic(app);
   }

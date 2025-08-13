@@ -1,9 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
-import Mailjet from 'node-mailjet';
+import path from 'path';
+import fs from 'fs';
+import { sendOutlookHtmlEmail } from '../server/lib/outlook';
 
-// Validation schema
 const submitHugSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Valid email is required"),
@@ -16,64 +17,22 @@ const submitHugSchema = z.object({
   specificDetails: z.string().min(1, "Specific details are required"),
 });
 
-// Initialize Supabase client
 const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_URL || '',
   process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 );
 
-// Initialize Mailjet
-const mailjet = new Mailjet({
-  apiKey: process.env.MAILJET_API_KEY || '',
-  apiSecret: process.env.MAILJET_API_SECRET || ''
-});
+function loadTemplate(filename: string): string {
+  const full = path.resolve(process.cwd(), 'templates', filename);
+  return fs.readFileSync(full, 'utf-8');
+}
 
-async function sendSubmissionEmail(formData: any) {
-  try {
-    const request = await mailjet
-      .post("send", {'version': 'v3.1'})
-      .request({
-        Messages: [
-          {
-            From: {
-              Email: process.env.ADMIN_FROM_EMAIL || '',
-              Name: "CEO-The Written Hug"
-            },
-            To: [
-              {
-                Email: "onaamikaonaamika@gmail.com",
-                Name: "Admin"
-              }
-            ],
-            Bcc: [
-              {
-                Email: "bintemp8@gmail.com",
-                Name: "BCC Admin"
-              }
-            ],
-            TemplateID: parseInt(process.env.MAILJET_TEMPLATE_ID_SUBMISSION || '7221431'),
-            TemplateLanguage: true,
-            Subject: `You've Got a Kabootar from ${formData.name}`,
-            Variables: {
-              client_name: formData.name,
-              recipient_name: formData.recipientName,
-              email: formData.email,
-              phone: formData.phone,
-              service_type: formData.serviceType,
-              delivery_type: formData.deliveryType,
-              feelings: formData.feelings,
-              story: formData.story,
-              specific_details: formData.specificDetails,
-              submission_date: new Date().toLocaleDateString(),
-            }
-          }
-        ]
-      });
-    return true;
-  } catch (error) {
-    console.error('Mailjet error:', error);
-    return false;
+function fill(template: string, variables: Record<string, string>): string {
+  let html = template;
+  for (const [key, value] of Object.entries(variables)) {
+    html = html.replaceAll(`{{var:${key}}}`, value);
   }
+  return html;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -83,10 +42,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const validatedData = submitHugSchema.parse(req.body);
-    
-    // Insert into Supabase (note: table name has space)
+
     const { data: hug, error } = await supabaseAdmin
-      .from('written hug')
+      .from('written_hug')
       .insert([{
         'Name': validatedData.name,
         'Recipient\'s Name': validatedData.recipientName,
@@ -106,15 +64,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (error) throw error;
 
-    // Send notification email
-    const emailSent = await sendSubmissionEmail(validatedData);
+    const clientTpl = loadTemplate('form_response_client.html');
+    const adminTpl = loadTemplate('notification_admin.html');
 
-    res.json({ success: true, hug, emailSent });
+    const clientHtml = fill(clientTpl, { client_name: validatedData.name });
+    const adminHtml = fill(adminTpl, {
+      name: validatedData.name,
+      recipient_name: validatedData.recipientName,
+      date: new Date().toISOString(),
+      status: 'New',
+      email: validatedData.email,
+      phone: validatedData.phone,
+      message_details: `${validatedData.feelings}\n\n${validatedData.story}`,
+      submission_id: hug.id,
+    });
+
+    const toClient = await sendOutlookHtmlEmail({
+      to: validatedData.email,
+      cc: 'onaamikasadguru@gmail.com',
+      subject: 'We received your Kabootar',
+      html: clientHtml,
+    });
+
+    await sendOutlookHtmlEmail({
+      to: 'onaamikasadguru@gmail.com',
+      subject: `New Written Hug Submission from ${validatedData.name}`,
+      html: adminHtml,
+    });
+
+    await supabaseAdmin
+      .from('written_hug')
+      .update({ gmail_thread_id: toClient.conversationId })
+      .eq('id', hug.id);
+
+    await supabaseAdmin
+      .from('hug_replies')
+      .insert([{
+        hugid: hug.id,
+        sender_type: 'admin',
+        sender_name: 'CEO - The Written Hug',
+        message: '🕊️ We received your Kabootar — our team will review it and get back to you shortly.',
+        gmail_thread_id: toClient.conversationId,
+        gmail_message_id: toClient.id,
+      }]);
+
+    res.json({ success: true, hug, emailSent: true });
   } catch (error) {
     console.error('Submit hug error:', error);
-    res.status(400).json({ 
-      success: false, 
-      message: error instanceof Error ? error.message : 'Failed to submit hug' 
-    });
+    res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Failed to submit hug' });
   }
 }

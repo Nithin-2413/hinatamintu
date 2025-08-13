@@ -2,8 +2,10 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { supabaseAdmin } from "./lib/supabase";
-import { sendSubmissionEmail, sendReplyEmail } from "./lib/mailjet";
 import { z } from "zod";
+import path from 'path';
+import fs from 'fs';
+import { generateOutlookAuthUrl, exchangeOutlookCodeForTokens, sendOutlookHtmlEmail, replyInConversation } from './lib/outlook';
 
 const submitHugSchema = z.object({
   name: z.string(),
@@ -28,15 +30,46 @@ const adminLoginSchema = z.object({
   password: z.string(),
 });
 
+function loadTemplate(filename: string): string {
+  const full = path.resolve(process.cwd(), 'templates', filename);
+  return fs.readFileSync(full, 'utf-8');
+}
+
+function fill(template: string, variables: Record<string, string>): string {
+  let html = template;
+  for (const [key, value] of Object.entries(variables)) {
+    html = html.replaceAll(`{{var:${key}}}`, value);
+  }
+  return html;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Outlook OAuth start
+  app.get('/auth/outlook', async (_req, res) => {
+    const url = generateOutlookAuthUrl();
+    res.redirect(url);
+  });
+
+  // Outlook OAuth callback
+  app.get('/outlook/auth/callback', async (req, res) => {
+    try {
+      const code = req.query.code as string;
+      if (!code) return res.status(400).send('Missing code');
+      const tokens = await exchangeOutlookCodeForTokens(code);
+      console.log('Copy this refresh token to your env as OUTLOOK_REFRESH_TOKEN:', tokens.refresh_token);
+      res.send('Authorization successful. Check server logs for refresh_token. Save it as OUTLOOK_REFRESH_TOKEN.');
+    } catch (e:any) {
+      console.error('Outlook OAuth callback error', e);
+      res.status(500).send('OAuth error');
+    }
+  });
+
   // Submit hug form
   app.post("/api/submitHug", async (req, res) => {
     try {
       const validatedData = submitHugSchema.parse(req.body);
-      
-      // Insert into Supabase (note: table name has space)
       const { data: hug, error } = await supabaseAdmin
-        .from('written hug')
+        .from('written_hug')
         .insert([{
           'Name': validatedData.name,
           'Recipient\'s Name': validatedData.recipientName,
@@ -55,36 +88,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (error) throw error;
 
-      // Send email notification to admin using template 7221431
-      const emailSent = await sendSubmissionEmail({
+      const clientTpl = loadTemplate('form_response_client.html');
+      const adminTpl = loadTemplate('notification_admin.html');
+
+      const clientHtml = fill(clientTpl, { client_name: validatedData.name });
+      const adminHtml = fill(adminTpl, {
         name: validatedData.name,
         recipient_name: validatedData.recipientName,
+        date: new Date().toISOString(),
+        status: 'New',
         email: validatedData.email,
         phone: validatedData.phone,
-        type_of_message: validatedData.serviceType,
         message_details: `${validatedData.feelings}\n\n${validatedData.story}`,
-        feelings: validatedData.feelings,
-        story: validatedData.story,
-        specific_details: validatedData.specificDetails || '',
-        delivery_type: validatedData.deliveryType,
         submission_id: hug.id,
       });
 
-      res.json({ success: true, hug, emailSent });
+      const sent = await sendOutlookHtmlEmail({
+        to: validatedData.email,
+        cc: 'onaamikasadguru@gmail.com',
+        subject: 'We received your Kabootar',
+        html: clientHtml,
+      });
+
+      await sendOutlookHtmlEmail({
+        to: 'onaamikasadguru@gmail.com',
+        subject: `New Written Hug Submission from ${validatedData.name}`,
+        html: adminHtml,
+      });
+
+      await supabaseAdmin
+        .from('written_hug')
+        .update({ gmail_thread_id: sent.conversationId })
+        .eq('id', hug.id);
+
+      await supabaseAdmin
+        .from('hug_replies')
+        .insert([{
+          hugid: hug.id,
+          sender_type: 'admin',
+          sender_name: 'CEO - The Written Hug',
+          message: '🕊️ We received your Kabootar — our team will review it and get back to you shortly.',
+          gmail_thread_id: sent.conversationId,
+          gmail_message_id: sent.id,
+        }]);
+
+      res.json({ success: true, hug, emailSent: true });
     } catch (error) {
       console.error('Submit hug error:', error);
-      res.status(400).json({ 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Failed to submit' 
-      });
+      res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Failed to submit' });
     }
   });
 
   // Get all hugs for admin
-  app.get("/api/getHugs", async (req, res) => {
+  app.get("/api/getHugs", async (_req, res) => {
     try {
       const { data: hugs, error } = await supabaseAdmin
-        .from('written hug')
+        .from('written_hug')
         .select('*')
         .order('Date', { ascending: false });
 
@@ -93,10 +152,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, hugs });
     } catch (error) {
       console.error('Get hugs error:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Failed to fetch hugs' 
-      });
+      res.status(500).json({ success: false, message: error instanceof Error ? error.message : 'Failed to fetch hugs' });
     }
   });
 
@@ -108,18 +164,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ success: false, message: 'hugid required' });
       }
 
-      // Get the hug
       const { data: hug, error: hugError } = await supabaseAdmin
-        .from('written hug')
+        .from('written_hug')
         .select('*')
         .eq('id', hugid)
         .single();
 
       if (hugError) throw hugError;
 
-      // Get replies (note: table name has space)
       const { data: replies, error: repliesError } = await supabaseAdmin
-        .from('hug replies')
+        .from('hug_replies')
         .select('*')
         .eq('hugid', hugid)
         .order('created_at', { ascending: true });
@@ -129,10 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, hug, replies });
     } catch (error) {
       console.error('Get conversation error:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Failed to fetch conversation' 
-      });
+      res.status(500).json({ success: false, message: error instanceof Error ? error.message : 'Failed to fetch conversation' });
     }
   });
 
@@ -141,52 +192,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = sendReplySchema.parse(req.body);
 
-      // Insert reply into database with CEO-The Written Hug as sender (note: table name has space)
-      const { data: reply, error: replyError } = await supabaseAdmin
-        .from('hug replies')
-        .insert([{
-          hugid: validatedData.hugid,
-          sender_type: 'admin',
-          sender_name: 'CEO-The Written Hug',
-          message: validatedData.message,
-        }])
-        .select()
-        .single();
-
-      if (replyError) throw replyError;
-
-      // Get client details
       const { data: hug, error: hugError } = await supabaseAdmin
-        .from('written hug')
-        .select('Name, "Email Address"')
+        .from('written_hug')
+        .select('id, "Email Address", gmail_thread_id')
         .eq('id', validatedData.hugid)
         .single();
 
       if (hugError) throw hugError;
       if (!hug) throw new Error('Hug not found');
 
-      // Send email to client
-      const emailSent = await sendReplyEmail(hug['Email Address'] as string, {
-        client_name: hug.Name as string,
-        reply_message: validatedData.message,
-        admin_name: validatedData.admin_name,
-        from_email: process.env.ADMIN_FROM_EMAIL || '',
-        reply_link: `${req.protocol}://${req.get('host')}/admin/${validatedData.hugid}`,
+      const sent = await replyInConversation({
+        conversationId: (hug as any).gmail_thread_id,
+        replyHtml: `<p>${validatedData.message}</p>`,
       });
 
-      // Update status to "Replied"
       await supabaseAdmin
-        .from('written hug')
+        .from('hug_replies')
+        .insert([{
+          hugid: validatedData.hugid,
+          sender_type: 'admin',
+          sender_name: 'CEO - The Written Hug',
+          message: validatedData.message,
+          gmail_thread_id: sent.conversationId,
+          gmail_message_id: sent.id,
+        }]);
+
+      await supabaseAdmin
+        .from('written_hug')
         .update({ Status: 'Replied' })
         .eq('id', validatedData.hugid);
 
-      res.json({ success: true, reply, emailSent });
+      res.json({ success: true });
     } catch (error) {
       console.error('Send reply error:', error);
-      res.status(400).json({ 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Failed to send reply' 
-      });
+      res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Failed to send reply' });
     }
   });
 
@@ -194,18 +233,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/adminLogin", async (req, res) => {
     try {
       const { username, password } = adminLoginSchema.parse(req.body);
-      
-      // Simple authentication check
       if (username === "SonuHoney" && password === "Chipmunk@15#") {
         res.json({ success: true, message: "Login successful" });
       } else {
         res.status(401).json({ success: false, message: "Invalid credentials" });
       }
-    } catch (error) {
-      res.status(400).json({ 
-        success: false, 
-        message: "Invalid request" 
-      });
+    } catch (_error) {
+      res.status(400).json({ success: false, message: "Invalid request" });
     }
   });
 
